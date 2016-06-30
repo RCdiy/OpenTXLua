@@ -5,17 +5,31 @@ http://RCdiy.ca
 
 To submit requests for a new script to be written or to contribute yours please email info@RCdiy.ca
 
-Depending on demand I may open this repository up so others may help maintain it.
+To use these scripts:
+- Click on the script type directory e.g. TELEMETRY
+- Click on the file to display it's contents e.g. 01GtStrd.lua
+- Right click on the file to download it to your computer
+- Move/copy the file as described in the file e.g. SD Card Copy/SCRIPTS/TELEMETRY/01GtStrd.lua
+- Test the script on your computer using OpenTx Companion
+-- Test instructions http://rcdiy.ca/?p=309 
 
-Suggested basic script submission requirements
-- Permission to modify your scripts before being uploaded to this repository
+To submit requests for a new script to be written or to contribute yours please send in an email.
 
-Suggested script header format
+Depending on this repository may be opened up so others may help maintain it.
+
+Script Submission Conditions
+- Permission to modify your scripts (retaining author credit to you)
+- Working on the current version of OpenTx Companion
+- Documentation as suggested below
+
+Suggested Documentation
 -- OpenTx Lua script
 -- TELEMETRY
 -- Place this file in SD Card copy on your computer > /SCRIPTS/TELEMETRY/<name>.lua
 
--- Author: 
+-- Works On OpenTx Companion Version: 2.1.8
+
+-- Author: RCdiy
 -- Web: http://RCdiy.ca
 
 -- Date: 2016 June 28
