@@ -2,8 +2,9 @@
 Lua scripts for the OpenTx software environment.
 
 http://RCdiy.ca
+info@RCdiy.ca
 
-To submit requests for a new script to be written or to contribute yours please email info@RCdiy.ca
+These scripts are described on the website RCdiy.ca
 
 To use these scripts:
 - Click on the script type directory e.g. TELEMETRY

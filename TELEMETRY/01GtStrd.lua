@@ -2,6 +2,8 @@
 -- TELEMETRY
 -- Place this file in SD Card copy on your computer > /SCRIPTS/TELEMETRY/<name>.lua
 
+-- Works On OpenTx Companion Version: 2.1.8
+
 -- Author: RC diy
 -- Web: http://RCdiy.ca
 
