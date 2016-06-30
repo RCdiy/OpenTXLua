@@ -37,51 +37,51 @@ Suggested Documentation
   Web: http://RCdiy.ca
   Date: 2016 June 28
 
-  Description
-    
-    Read a Tx global variable to determine battery capacity in mAh
-    
-    Read a sensor to determine current mAh consumption
-    
-    Display remaining battery mAh
-    
-    Display remaining battery percent
-    
-    Write remaining battery mAh to a Tx global variable
-    
-    Write remaining battery percent to a Tx global variable
-
-  Note
-    
-    The OpenTx global variables have a 1024 limit.
-    
-    mAh values are expressed as mAh/100
-    
-    2800 mAh will be 28 when stored in an OpenTx global variables
-    
-    800 mAh will be 8
-
-  Sensors 
-    
-    mAh (calculated sensor based on VFAS, FrSky FAS-40)
-
-  Global OpenTx variables used  
-    GV1 = Read battery capacity provided as mAh/100, 2800 mAh would be 28, 800 mAh would be 8
-    
-    GV2 = Write mAh remaining
-    
-    GV3 = Write % remaining
-
-  Global Lua environment variables used
-    
-    None
-    
-    if required use a naming convention similar to below to reduce conflict with other scripts
+    Description
       
-      RCdiy<script file name prefix upto 8 characters>_variablecontent
+      Read a Tx global variable to determine battery capacity in mAh
       
-      e.g. RCdiymAhRmain_CapacityRemainingPercent = 0
+      Read a sensor to determine current mAh consumption
+      
+      Display remaining battery mAh
+      
+      Display remaining battery percent
+      
+      Write remaining battery mAh to a Tx global variable
+      
+      Write remaining battery percent to a Tx global variable
 
-  Variables local to this script must use the word "local" before the variable
+    Note
+      
+      The OpenTx global variables have a 1024 limit.
+      
+      mAh values are expressed as mAh/100
+      
+      2800 mAh will be 28 when stored in an OpenTx global variables
+      
+      800 mAh will be 8
+
+    Sensors 
+      
+      mAh (calculated sensor based on VFAS, FrSky FAS-40)
   
-    e.g. local SensorName = "RxBt"
+    Global OpenTx variables used  
+      GV1 = Read battery capacity provided as mAh/100, 2800 mAh would be 28, 800 mAh would be 8
+      
+      GV2 = Write mAh remaining
+      
+      GV3 = Write % remaining
+
+    Global Lua environment variables used
+      
+      None
+      
+      if required use a naming convention similar to below to reduce conflict with other scripts
+        
+        RCdiy<script file name prefix upto 8 characters>_variablecontent
+        
+        e.g. RCdiymAhRmain_CapacityRemainingPercent = 0
+  
+    Variables local to this script must use the word "local" before the variable
+    
+      e.g. local SensorName = "RxBt"
