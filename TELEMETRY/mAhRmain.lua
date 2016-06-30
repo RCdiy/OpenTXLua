@@ -3,7 +3,7 @@
 -- Place this file in SD Card copy on your computer > /SCRIPTS/TELEMETRY/<name>.lua
 
 -- Works On OpenTx Companion Version: 2.1.8
--- Works With Sensor: FrSky FAS-40
+-- Works With Sensor: FrSky FAS40S
 
 -- Author: RCdiy
 -- Web: http://RCdiy.ca
