@@ -17,7 +17,7 @@ To use these scripts:
 
 To submit requests for a new script to be written or to contribute yours please send in an email.
 
-Depending on this repository may be opened up so others may help maintain it.
+Depending on demand this repository may be opened up so others may help maintain it.
 
 Script Submission Conditions
 - Permission to modify your scripts (retaining author credit to you)
@@ -26,16 +26,16 @@ Script Submission Conditions
 
 Suggested Documentation
 
-  OpenTx Lua script
-  TELEMETRY
+    OpenTx Lua script
+    TELEMETRY
 
-  Place this file in SD Card copy on your computer > /SCRIPTS/TELEMETRY/<name>.lua
+    Place this file in SD Card copy on your computer > /SCRIPTS/TELEMETRY/<name>.lua
   
-  Works On OpenTx Companion Version: 2.1.8
+    Works On OpenTx Companion Version: 2.1.8
 
-  Author: RCdiy
-  Web: http://RCdiy.ca
-  Date: 2016 June 28
+    Author: RCdiy
+   Web: http://RCdiy.ca
+    Date: 2016 June 28
 
     Description
       
