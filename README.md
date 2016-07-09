@@ -13,7 +13,7 @@ To use these scripts:
 - Right click on the file to download it to your computer
 - Move/copy the file as described in the file e.g. SD Card Copy/SCRIPTS/TELEMETRY/01GtStrd.lua
 - Test the script on your computer using OpenTx Companion
-  - Test instructions http://rcdiy.ca/?p=309 
+  - Test instructions http://rcdiy.ca/telemetry-scripts-getting-started/ 
 
 To submit requests for a new script to be written or to contribute yours please send in an email.
 
