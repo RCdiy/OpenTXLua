@@ -2,8 +2,8 @@
 -- TELEMETRY
 -- Place this file in the SD Card folder on your computer
 -- SD Card /SCRIPTS/TELEMETRY/<name>.lua
--- Place the accompaning image files in /SCRIPTS/BMP/GPS/
--- Place the accompaning sound files in /SCRIPTS/SOUND/GPS/
+-- Place the accompanying image files in /SCRIPTS/BMP/GPS/
+-- Place the accompanying sound files in /SCRIPTS/SOUND/GPS/
 
 -- Works On OpenTx Companion Version: 2.1.8
 -- Works With Sensor: FrSky GPS
@@ -48,15 +48,15 @@
 -- Speaks "Flying" direction of movement, must be moving
 -- Speaks "Turn" turn direction to come home, up to 90 degrees
 -- Speaking of each is optional, off by default
+-- Speaing of each can be assigned to a switch
 -- Interval between speaking is individually configurable, seconds
 
 -- Initial (runway, pilot) location determined when TELEMETRY is Reset on the Tx
--- When using the Companion "Simulator Tx" load a log file in the "Telemetry Simulator"
--- "Reload Lua Scripts" to set initial location and get the script to work
 
--- Updates take place when the distance between two reads exceeds GPS accuracy
+-- Updates take place when the distance between two reads exceeds a set distance filter
 -- If the GPS accuracy is 2.5m then the previous and current position
--- must be greater than 2.5 meters for updates to take place
+-- must be greater than 2.5 meters x 6 = 15 meter for updates to take place
+-- The filter value is configurable
 
 -- Directions in 1 of 16 compass rose directions
 -- N, NNE, NE, ENE as 0, 23, 45, 68
@@ -87,8 +87,8 @@ local GPSDistanceFilter = 6 * SensorAccuracy -- suggest 5 to 7, reduces heading 
 local SpeakHeading = false
 local SpeakTurn = false
 
-local SpeakHeadingUseTxSwitch = true -- if true here, SpeakHeading is ignored
-local SpeakTurnUseTxSwitch = true -- if true here, SpeakTurn is ignored
+local SpeakHeadingUseTxSwitch = false -- if true here, SpeakHeading is ignored
+local SpeakTurnUseTxSwitch = false -- if true here, SpeakTurn is ignored
   -- Tx switches "sa" to "sh"
   -- Tx X9E  "si" to "sr"
   -- Switch position
@@ -131,12 +131,12 @@ local GVDirectionHomeTurnLR = GV[4]
 local GVDistance = GV[5]
 local GVTrip = GV[6]
 
-local WriteGVDirectionHeading = true
-local WriteGVDirectionFind = true
-local WriteGVDirectionHome = true
-local WriteGVDirectionHomeTurnLR = true
-local WriteGVDistance = true
-local WriteGVTrip = true
+local WriteGVDirectionHeading = false
+local WriteGVDirectionFind = false
+local WriteGVDirectionHome = false
+local WriteGVDirectionHomeTurnLR = false
+local WriteGVDistance = false
+local WriteGVTrip = false
 
 -- File Paths
 -- location you placed the accompanying files
