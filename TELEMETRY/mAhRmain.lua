@@ -45,9 +45,12 @@
 -- must use the word "local" before the variable
 --local Sensor = model.getGlobalVariable(0, 0)
 local SensorName = "mAh" -- Use consumption sensor name from telemetry screen
-local GVBatteryCapacity = 0 -- Location of battery capacity, GV1=0, GV2=1 and so on
-local GVBatteryRemainmAh = 1 
-local GVBatteryRemainPercent = 2 
+
+-- Location of battery capacity, GV1=0, GV2=1 and so on
+GV = {[1] = 0, [2] = 1, [3] = 2,[4] = 3,[5] = 4,[6] = 5, [7] = 6, [8] = 7, [9] = 8}
+local GVBatteryCapacity = GV[7] 
+local GVBatteryRemainmAh = GV[8] 
+local GVBatteryRemainPercent = GV[9]
 
 local BattryCapacityFullmAh = 0
 local BattryCapacitymAh = 0
