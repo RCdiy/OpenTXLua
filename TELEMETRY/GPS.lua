@@ -1,7 +1,7 @@
 -- OpenTx Lua script
 -- TELEMETRY
 -- Place this file in the SD Card folder on your computer
--- SD Card /SCRIPTS/TELEMETRY/<name>.lua
+-- SD Card /SCRIPTS/TELEMETRY/
 -- Place the accompanying image files in /SCRIPTS/BMP/GPS/
 -- Place the accompanying sound files in /SCRIPTS/SOUND/GPS/
 
