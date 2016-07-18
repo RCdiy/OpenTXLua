@@ -9,6 +9,7 @@
 -- Web: http://RCdiy.ca
 
 -- Date: 2016 June 28
+-- Update: 2016 July 18
 
 -- Description
 -- Read a Tx global variable to determine battery capacity in mAh
@@ -17,6 +18,7 @@
 -- Display remaining battery percent
 -- Write remaining battery mAh to a Tx global variable
 -- Write remaining battery percent to a Tx global variable
+-- Writes are optional, on by default
 -- A reserve of 20% has been set. All values are calculated with 
 -- reference to this reserve. 
 -- At 0 mAh and 0 % remaining displayed there is actually 20% remaining.
@@ -30,27 +32,32 @@
 
 -- Sensors 
 -- mAh (calculated sensor based on VFAS, FrSky FAS-40)
+-- Use consumption sensor name from OpenTx TELEMETRY screen
+local SensorName = "mAh"
 
--- Global OpenTx variables used
--- GV1 = Read battery capacity provided as mAh/100, 2800 mAh would be 28, 800 mAh would be 8
--- GV2 = Write mAh remaining
--- GV3 = Write  remaining
+-- Global OpenTx variables used (Global to the model)
+-- GV7 = Read battery capacity provided as mAh/100, 2800 mAh would be 28, 800 mAh would be 8
+-- GV8 = Write mAh remaining
+-- GV9 = Write  remaining
 -- 2345 mAh will be writen as 23, floor(2345/100)
 -- 76.7% will be writen as 76, floor(76)
-
--- Global Lua environment variables used
--- None
-
--- Variables local to this script
--- must use the word "local" before the variable
---local Sensor = model.getGlobalVariable(0, 0)
-local SensorName = "mAh" -- Use consumption sensor name from telemetry screen
-
 -- Location of battery capacity, GV1=0, GV2=1 and so on
-GV = {[1] = 0, [2] = 1, [3] = 2,[4] = 3,[5] = 4,[6] = 5, [7] = 6, [8] = 7, [9] = 8}
-local GVBatteryCapacity = GV[7] 
+local GV = {[1] = 0, [2] = 1, [3] = 2,[4] = 3,[5] = 4,[6] = 5, [7] = 6, [8] = 7, [9] = 8}
+
+local GVBatteryCapacity = GV[7] -- Use GV[7] for GV7, GV[1] for GV1 and so on
 local GVBatteryRemainmAh = GV[8] 
 local GVBatteryRemainPercent = GV[9]
+local WriteGVBatteryRemainmAh = true -- set to false to turn off write
+local WriteGVBatteryRemainPercent = true
+-- If you have set either write to false you may set the corresponding variable to ""
+-- example local GVBatteryRemainmAh = ""
+
+
+-- ----------------------------------------------------------------------------------------
+-- ----------------------------------------------------------------------------------------
+
+-- AVOID EDITING BELOW HERE
+
 
 local BattryCapacityFullmAh = 0
 local BattryCapacitymAh = 0
@@ -60,6 +67,9 @@ local BatteryRemainPercent = 0
 local BatteryReservePercent = 20 -- set to zero to disable
 
 local TextHeader = "Flight Battery                      "
+
+-- Global Lua environment variables used (Global between scripts)
+-- None
 
 local function init_func()
   -- Called once when model is loaded
@@ -88,8 +98,12 @@ local function bg_func()
   -- index is the OpenTx GV number, 0 is GV1, 1 is GV2 and so on
   -- phase is the flight mode
   -- value must be between -1024 and 1024
-  model.setGlobalVariable(GVBatteryRemainmAh, 0, math.floor(BatteryRemainmAh/100))
-  model.setGlobalVariable(GVBatteryRemainPercent, 0, BatteryRemainPercent)
+  if WriteGVBatteryRemainmAh == true then
+    model.setGlobalVariable(GVBatteryRemainmAh, 0, math.floor(BatteryRemainmAh/100))
+  end
+  if WriteGVBatteryRemainPercent == true then
+    model.setGlobalVariable(GVBatteryRemainPercent, 0, BatteryRemainPercent)
+  end
   
 end
 
