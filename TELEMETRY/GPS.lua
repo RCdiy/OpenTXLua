@@ -19,6 +19,7 @@
 --            http://www.movable-type.co.uk/scripts/latlong.html
 
 -- Date: 2016 July 1
+-- Update: 2016 July 18
 
 -- Description
 
@@ -112,7 +113,7 @@ local DisplayDirectionHomeTurnLR = true
 local DisplayDistanceHome = true
 local DisplayTrip = true
 
--- Global OpenTx variables
+-- Global OpenTx variables (Global to the model)
 -- Change as desired
 -- GV1 = "Flying" / "Heading"
 -- GV2 = "Find" 
@@ -122,7 +123,7 @@ local DisplayTrip = true
 -- If "Home Turn" is +ve then turn aircraft to its right
 -- GV5 = "Distance" 
 -- GV6 = "Trip" 
-GV = {[1] = 0, [2] = 1, [3] = 2,[4] = 3,[5] = 4,[6] = 5, [7] = 6, [8] = 7, [9] = 8}
+local GV = {[1] = 0, [2] = 1, [3] = 2,[4] = 3,[5] = 4,[6] = 5, [7] = 6, [8] = 7, [9] = 8}
 
 local GVDirectionHeading = GV[1] -- Location to write
 local GVDirectionFind = GV[2]
@@ -148,7 +149,7 @@ local SoundFilesPath = "/SCRIPTS/SOUNDS/GPS/"
 
 -- AVOID EDITING BELOW HERE
 
--- Global Lua environment variables used
+-- Global Lua environment variables used (Global between scripts)
 -- None
 
 -- Variables local to this script
