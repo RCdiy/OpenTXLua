@@ -33,7 +33,7 @@
 
 -- Tips
 -- The GV values (Global OpenTx Variables) that appear on the Tx are global
--- to that model, not accross models.
+-- to that model, not across models.
 -- Standardise accross all your models which GV will be used for battery
 -- capacity. For each model you can set different battery capacities.
 -- E.g. Cargo Plane GV7 = 27, Quad 250 GV7 = 13
