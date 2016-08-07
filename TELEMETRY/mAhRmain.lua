@@ -1,6 +1,7 @@
 -- OpenTx Lua script
 -- TELEMETRY
 -- Place this file in SD Card copy on your computer > /SCRIPTS/TELEMETRY/
+-- Place the accompanying sound files in /SOUNDS/en/
 
 -- Works On OpenTx Companion Version: 2.1.8
 -- Works With Sensor: FrSky FAS40S
@@ -9,7 +10,7 @@
 -- Web: http://RCdiy.ca
 
 -- Date: 2016 June 28
--- Update: 2016 July 18
+-- Update: 2016 August 7
 
 -- Description
 -- Read a Tx global variable to determine battery capacity in mAh
@@ -19,8 +20,8 @@
 -- Write remaining battery mAh to a Tx global variable
 -- Write remaining battery percent to a Tx global variable
 -- Writes are optional, on by default
--- A reserve of 20% has been set. All values are calculated with 
--- reference to this reserve. 
+-- A reserve of 20% has been set. All values are calculated with
+-- reference to this reserve.
 -- At 0 mAh and 0 % remaining displayed there is actually 20% remaining.
 -- This reserve is easily changed within the script.
 
@@ -30,7 +31,24 @@
 -- 2800 mAh will be 28 when stored in an OpenTx global variables
 -- 800 mAh will be 8
 
--- Sensors 
+-- Tips
+-- The GV values (Global OpenTx Variables) that appear on the Tx are global
+-- to that model, not accross models.
+-- Standardise accross all your models which GV will be used for battery
+-- capacity. For each model you can set different battery capacities.
+-- E.g. Cargo Plane GV7 = 27, Quad 250 GV7 = 13
+--
+-- Use Logical Switches and Special Functions to play sound tracks
+-- E.g.
+-- L11 - GV9 < 50
+-- L12 - GV9 < 10
+-- SF3 - L12 Play Track batcrit
+-- SF4 - L11 Play Value GV9 10s
+-- SF5 - L11 Play Track #PrcntRm 10s
+-- After the remaining battery capicity drops below 50%
+-- Every 10 seconds the value of GV9 will be played followed by the sound track
+
+-- Sensors
 -- mAh (calculated sensor based on VFAS, FrSky FAS-40)
 -- Use consumption sensor name from OpenTx TELEMETRY screen
 local SensorName = "mAh"
@@ -45,7 +63,7 @@ local SensorName = "mAh"
 local GV = {[1] = 0, [2] = 1, [3] = 2,[4] = 3,[5] = 4,[6] = 5, [7] = 6, [8] = 7, [9] = 8}
 
 local GVBatteryCapacity = GV[7] -- Use GV[7] for GV7, GV[1] for GV1 and so on
-local GVBatteryRemainmAh = GV[8] 
+local GVBatteryRemainmAh = GV[8]
 local GVBatteryRemainPercent = GV[9]
 local WriteGVBatteryRemainmAh = true -- set to false to turn off write
 local WriteGVBatteryRemainPercent = true
@@ -74,13 +92,13 @@ local TextHeader = "Flight Battery                      "
 local function init_func()
   -- Called once when model is loaded
   -- This could be empty
-  
+
   -- model.getGlobalVariable(index [, phase])
   -- index is the OpenTx GV number, 0 is GV1, 1 is GV2 and so on
   -- phase is the flight mode
   BattryCapacityFullmAh = model.getGlobalVariable(GVBatteryCapacity, 0) * 100
   BattryCapacitymAh = BattryCapacityFullmAh * (100-BatteryReservePercent)/100
-  
+
 end
 
 local function bg_func()
@@ -93,7 +111,7 @@ local function bg_func()
   if not (BattryCapacitymAh == 0) then
     BatteryRemainPercent = math.floor((BatteryRemainmAh / BattryCapacitymAh) * 100)
   end
-  
+
   -- model.setGlobalVariable(index, phase, value)
   -- index is the OpenTx GV number, 0 is GV1, 1 is GV2 and so on
   -- phase is the flight mode
@@ -104,16 +122,16 @@ local function bg_func()
   if WriteGVBatteryRemainPercent == true then
     model.setGlobalVariable(GVBatteryRemainPercent, 0, BatteryRemainPercent)
   end
-  
+
 end
 
 local function run_func(event)
   -- Called periodically when screen is visible
-  bg_func() -- a good way to reduce repitition 
-  
+  bg_func() -- a good way to reduce repitition
+
   -- LCD / Display code
   lcd.clear()
-  
+
   -- lcd.drawText(x, y, text [, flags])
   -- Displays text
   -- text is the text to display
@@ -129,8 +147,8 @@ local function run_func(event)
   lcd.drawText( 1, 23, BatteryRemainmAh, XXLSIZE)
   lcd.drawText( lcd.getLastPos()+2, 40, " mAh", MIDSIZE)
   lcd.drawText( 126, 23, BatteryRemainPercent, XXLSIZE)
-  lcd.drawText( lcd.getLastPos()+2, 40, " %", MIDSIZE) 
-  
+  lcd.drawText( lcd.getLastPos()+2, 40, " %", MIDSIZE)
+
 end
 
 
