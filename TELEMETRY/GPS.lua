@@ -3,7 +3,7 @@
 -- Place this file in the SD Card folder on your computer
 -- SD Card /SCRIPTS/TELEMETRY/
 -- Place the accompanying image files in /SCRIPTS/BMP/GPS/
--- Place the accompanying sound files in /SCRIPTS/SOUND/GPS/
+-- Place the accompanying sound files in /SCRIPTS/SOUNDS/GPS/
 
 -- Works On OpenTx Companion Version: 2.1.8
 -- Works With Sensor: FrSky GPS
@@ -11,9 +11,9 @@
 -- Author: RCdiy
 -- Web: http://RCdiy.ca
 
--- Thanks:  Painless360 
+-- Thanks:  Painless360
 --            http://painless360.webs.com/
---          GIS Map Info 
+--          GIS Map Info
 --            http://www.igismap.com
 --          Movable Type Scripts
 --            http://www.movable-type.co.uk/scripts/latlong.html
@@ -26,7 +26,7 @@
 -- Reads GPS coordinates
 
 -- Displays "Flying" / "Heading" direction
--- Displays "Find" direction from initial location to current location 
+-- Displays "Find" direction from initial location to current location
 -- Displays "Home" direction from current location to initial location
 -- Displays "Turn" turn angle to come home
 -- Display of each is optional, on by default
@@ -36,10 +36,10 @@
 -- "Trip" is the accumulated distance between GPS coordinates, distance flown ground track
 -- Display of each is optional, on by default
 
--- Writes directions to OpenTx global variables 
--- Writes of each is optional, off by default 
+-- Writes directions to OpenTx global variables
+-- Writes of each is optional, off by default
 
--- Writes distances to OpenTx global variables 
+-- Writes distances to OpenTx global variables
 -- Write of each is optional, off by default
 -- OpenTx global variables have a range of -1024 to 1024
 -- When a distance exceeds 1024 the distance/10 is written
@@ -75,10 +75,10 @@
 -- Note
 -- The OpenTx global variables have a -1024 to 1024 limit.
 
--- Sensors 
+-- Sensors
 -- GPS
 -- Use GPS sensor name from OpenTx TELEMETRY screen
-local GPSSensorName = "GPS" 
+local GPSSensorName = "GPS"
 
 local SensorAccuracy = 2.5 -- meters GPS accuracy as per manual
 local GPSDistanceFilter = 6 * SensorAccuracy -- suggest 5 to 7, reduces heading flutter, improves trip accuracy
@@ -116,13 +116,13 @@ local DisplayTrip = true
 -- Global OpenTx variables (Global to the model)
 -- Change as desired
 -- GV1 = "Flying" / "Heading"
--- GV2 = "Find" 
--- GV3 = "Home" 
--- GV4 = "Home Turn" 
+-- GV2 = "Find"
+-- GV3 = "Home"
+-- GV4 = "Home Turn"
 -- If "Home Turn" is -ve then turn aircraft to its left
 -- If "Home Turn" is +ve then turn aircraft to its right
--- GV5 = "Distance" 
--- GV6 = "Trip" 
+-- GV5 = "Distance"
+-- GV6 = "Trip"
 local GV = {[1] = 0, [2] = 1, [3] = 2,[4] = 3,[5] = 4,[6] = 5, [7] = 6, [8] = 7, [9] = 8}
 
 local GVDirectionHeading = GV[1] -- Location to write
@@ -206,7 +206,7 @@ local Debuging = false
 local CompassRose16Table = {  [0] = "N", [23] = "NNE", [45] = "NE", [68] = "ENE",
                               [90] = "E", [113] = "ESE" , [135] = "SE", [158] = "SSE",
                               [180] = "S", [203] = "SSW", [225] = "SW", [248] = "WSW",
-                              [270] = "W", [293] = "WNW", [315] = "NW", [338] = "NNW" 
+                              [270] = "W", [293] = "WNW", [315] = "NW", [338] = "NNW"
                             }
 
 
@@ -215,33 +215,33 @@ local CompassRose16Table = {  [0] = "N", [23] = "NNE", [45] = "NE", [68] = "ENE"
 local DisplayHeading16FileName = { [0] = "HN.bmp", [23] = "HNNE.bmp", [45] = "HNE.bmp", [68] = "HENE.bmp",
                                 [90] = "HE.bmp", [113] = "HESE.bmp" , [135] = "HSE.bmp", [158] = "HSSE.bmp",
                                 [180] = "HS.bmp", [203] = "HSSW.bmp", [225] = "HSW.bmp", [248] = "HWSW.bmp",
-                                [270] = "HW.bmp", [293] = "HWNW.bmp", [315] = "HNW.bmp", [338] = "HNNW.bmp" 
+                                [270] = "HW.bmp", [293] = "HWNW.bmp", [315] = "HNW.bmp", [338] = "HNNW.bmp"
                                 }
 -- This is used to access the Turn image files
 -- In the future new file names could be used and updated here
-local DisplayTurn16FileName = { [0] = "R0.bmp" , [23] = "R23.bmp", [45] = "R45.bmp", [68] = "R45.bmp", 
-                                [90] = "R90.bmp", [113] = "R113.bmp", [135] = "R135.bmp", [158] = "R158.bmp", 
-                                [180] = "R180.bmp", 
-                                [-158] = "L158.bmp", [-135] = "L135.bmp", [-113] = "L135.bmp", 
+local DisplayTurn16FileName = { [0] = "R0.bmp" , [23] = "R23.bmp", [45] = "R45.bmp", [68] = "R45.bmp",
+                                [90] = "R90.bmp", [113] = "R113.bmp", [135] = "R135.bmp", [158] = "R158.bmp",
+                                [180] = "R180.bmp",
+                                [-158] = "L158.bmp", [-135] = "L135.bmp", [-113] = "L135.bmp",
                                 [-90] = "L90.bmp", [-68] = "L68.bmp",[-45] = "L45.bmp", [-23] = "L23.bmp"
-                
+
               }
 -- This is used to access the Heading sound files
 -- In the future new file names could be used and updated here
 local SpeakHeading16FileName ={ [0] = "HN.wav", [23] = "HNNE.wav", [45] = "HNE.wav", [68] = "HENE.wav",
                                 [90] = "HE.wav", [113] = "HESE.wav" , [135] = "HSE.wav", [158] = "HSSE.wav",
                                 [180] = "HS.wav", [203] = "HSSW.wav", [225] = "HSW.wav", [248] = "HWSW.wav",
-                                [270] = "HW.wav", [293] = "HWNW.wav", [315] = "HNW.wav", [338] = "HNNW.wav" 
+                                [270] = "HW.wav", [293] = "HWNW.wav", [315] = "HNW.wav", [338] = "HNNW.wav"
                               }
 -- This is used to access the Turn sound files
 -- In the future new file names could be used and updated here
 -- There are fewer than 16 direction files because because relative directions
 -- are being provided and getting an aircraft to turn exactly is beyond many
 -- pilot's flying skills.
-local SpeakTurnLR16FileName = { [0] = "R0.wav" , [23] = "R23.wav", [45] = "R45.wav", [68] = "R45.wav", 
-                                [90] = "R90.wav", [113] = "R135.wav", [135] = "R135.wav", [158] = "R180.wav", 
-                                [180] = "R180.wav", 
-                                [-158] = "L135.wav", [-135] = "L135.wav", [-113] = "L135.wav", 
+local SpeakTurnLR16FileName = { [0] = "R0.wav" , [23] = "R23.wav", [45] = "R45.wav", [68] = "R45.wav",
+                                [90] = "R90.wav", [113] = "R135.wav", [135] = "R135.wav", [158] = "R180.wav",
+                                [180] = "R180.wav",
+                                [-158] = "L135.wav", [-135] = "L135.wav", [-113] = "L135.wav",
                                 [-90] = "L90.wav", [-68] = "L45.wav",[-45] = "L45.wav", [-23] = "L23.wav"
                               }
 
@@ -249,7 +249,7 @@ local SpeakTurnLR16FileName = { [0] = "R0.wav" , [23] = "R23.wav", [45] = "R45.w
 
 local function getSpeakHeadingStatus()
   -- Evaluates speak settings
-  -- Returns true or false 
+  -- Returns true or false
   if SpeakHeadingUseTxSwitch == true then
     -- "U", "M", "D","notU", "notM", "notD"
     position = getValue(SpeakHeadSwitch)
@@ -274,7 +274,7 @@ local function getSpeakHeadingStatus()
 end
 local function getSpeakTurnStatus()
   -- Evaluates speak settings
-  -- Returns true or false 
+  -- Returns true or false
   if SpeakTurnUseTxSwitch == true then
     -- "U", "M", "D","notU", "notM", "notD"
     position = getValue(SpeakTurnSwitch)
@@ -314,13 +314,13 @@ local function limitDecimalPlaces( num, decimals)
 end
 local function printToDebugConsoleAllDistancesDirections()
       print(
-            "Current", limitDecimalPlaces(DirectionCurrentDegrees,2), 
+            "Current", limitDecimalPlaces(DirectionCurrentDegrees,2),
             "Current16", DirectionCurrent16Degrees,
-            "Find", limitDecimalPlaces(DirectionFindDegrees,2), 
+            "Find", limitDecimalPlaces(DirectionFindDegrees,2),
             "Find16", DirectionFind16Degrees,
-            "Home", limitDecimalPlaces(DirectionHomeDegrees,2), 
+            "Home", limitDecimalPlaces(DirectionHomeDegrees,2),
             "Home16", DirectionHome16Degrees,
-            "HomeLR", limitDecimalPlaces(DirectionHomeTurnLRDegrees,2), 
+            "HomeLR", limitDecimalPlaces(DirectionHomeTurnLRDegrees,2),
             "HomeLR16", DirectionHomeTurnLR16Degrees,
             "Between", DistanceBetweenCoordinates, "To", DistanceToModel, "Trip", DistanceTrip
           )
@@ -348,7 +348,7 @@ local function getSecondsElapsedSince2016()
     -- Returns the number of seconds elapsed since this script started
     -- Accurate to a 1 second or greater interval
     -- getDateTime()
-    -- Returns a table with Tx's current date and time 
+    -- Returns a table with Tx's current date and time
     -- { [year] = 2016 , [mon] = 12, [day] = 28, [hour] = 23 , [min] = 59, [sec] = 59 }
     now = getDateTime()
     nowSeconds = now.sec + (now.min * 60) + (now.hour * 3600) + (now.day * 86400) + (now.mon * 2678400) +
@@ -357,7 +357,7 @@ local function getSecondsElapsedSince2016()
     if Debuging == true then
       print("getDateTime", nowSeconds, now.sec, now.min, now.hour, now.day, now.mon, now.year)
     end
-    
+
     return nowSeconds
 end
 local function getDistanceBetweenCoordinates(Lat1, Lon1, Lat2, Lon2)
@@ -372,7 +372,7 @@ local function getDistanceBetweenCoordinates(Lat1, Lon1, Lat2, Lon2)
   dLambda = math.rad(Lon2-Lon1)
   a = math.sin(dPhi/2)^2 + math.cos(Phi1) * math.cos(Phi2) * math.sin(dLambda/2)^2
   c = 2 * math.atan2(math.sqrt(a), math.sqrt(1-a))
-  
+
   distance = R * c
   return distance
 end
@@ -390,12 +390,12 @@ local function getDegreesBetweenCoordinates(LatFrom, LonFrom, LatTo, LonTo)
   --LonTo = -90.200203
   -- correct answer is X  = 0.05967668696, Y = -0.00681261948, β = 96.51°
   X =  math.cos(math.rad(LatTo)) * math.sin(math.rad(LonTo-LonFrom))
-  
+
   Y = (math.cos(math.rad(LatFrom)) * math.sin(math.rad(LatTo))) - (
   math.sin(math.rad(LatFrom)) * math.cos(math.rad(LatTo)) * math.cos(math.rad(LonTo-LonFrom)))
-  
+
   Bearing = math.deg(math.atan2(math.rad(X), math.rad(Y)))
-  
+
   if Bearing < 0 then
     return 360 + Bearing
   else
@@ -410,13 +410,13 @@ local function getCompassDirection16Degrees(degrees)
     if degrees < 11.25 then
       return 0
     elseif degrees < 33.75 then
-      return 23 
+      return 23
     elseif degrees < 56.25 then
-      return 45 
+      return 45
     elseif degrees < 78.75 then
-      return 68 
+      return 68
     elseif degrees < 101.25 then
-      return 90 
+      return 90
     elseif degrees < 123.75 then
       return 113
     elseif degrees < 146.25 then
@@ -424,7 +424,7 @@ local function getCompassDirection16Degrees(degrees)
     elseif degrees < 168.75 then
       return 158
     elseif degrees < 191.25 then
-      return 180 
+      return 180
     elseif degrees < 213.75 then
       return 203
     elseif degrees < 236.25 then
@@ -457,7 +457,7 @@ local function getCompassDirection16Table(degrees)
     elseif degrees < 33.75 then
       return { "NNE", 23 }
     elseif degrees < 56.25 then
-      return { "NE", 45 }  
+      return { "NE", 45 }
     elseif degrees < 78.75 then
       return { "ENE", 68 }
     elseif degrees < 101.25 then
@@ -498,8 +498,8 @@ local function getTurnAmountLR16Degrees(degrees)
   -- (biased to turning right, fix??)
 
   if math.abs(degrees) > 360  then return "err" end
- 
-  if degrees< 0 then  
+
+  if degrees< 0 then
     -- turn left but make sure not past -180
     if degrees <= -168.75 then
       -- turn right, +ve
@@ -519,7 +519,7 @@ local function getTurnAmountLR16Degrees(degrees)
       return getCompassDirection16Degrees(degrees)
     end
   end
-  
+
 
 end
 local function updateAllDistancesDirections()
@@ -530,7 +530,7 @@ local function updateAllDistancesDirections()
   DirectionHomeTurnLRDegrees = DirectionHomeDegrees - DirectionCurrentDegrees
 
   -- Directions in 1 of 16 positions compass rose angles
-  DirectionCurrent16Degrees = getCompassDirection16Degrees(DirectionCurrentDegrees) 
+  DirectionCurrent16Degrees = getCompassDirection16Degrees(DirectionCurrentDegrees)
   DirectionFind16Degrees = getCompassDirection16Degrees(DirectionFindDegrees)
   DirectionHome16Degrees = getCompassDirection16Degrees(DirectionHomeDegrees)
   DirectionHomeTurnLR16Degrees = getTurnAmountLR16Degrees(DirectionHomeTurnLRDegrees)
@@ -551,11 +551,11 @@ end
 local function updateGPSData()
   -- Get GPS Data
   -- Return true if success, else false
-  -- Update GPSlat, GPSlon, 
-  -- Only when telemetry has been reset update 
+  -- Update GPSlat, GPSlon,
+  -- Only when telemetry has been reset update
   -- GPSlatHome, GPSlonHome, GPSlatPrevious, GPSlonPrevious
   -- and zero distances and directions
-  
+
   -- getValue(source)
   -- Returns the value of a source.
   -- The list of valid sources is available:
@@ -563,7 +563,7 @@ local function updateGPSData()
   -- To determine what whic data type was returned use type(anyValue)
   GPSDataTable = getValue(GPSSensorName)
   if type(GPSDataTable) == "table" then
-    if (GPSlatHome ~= GPSDataTable["pilot-lat"]) or 
+    if (GPSlatHome ~= GPSDataTable["pilot-lat"]) or
         (GPSlonHome ~= GPSDataTable["pilot-lon"]) then
       -- Telemetry has been reset
       GPSlatHome = GPSDataTable["pilot-lat"]
@@ -609,7 +609,7 @@ local function displayTurnLR16Degrees(degreeLR16, X, Y)
   -- Displays an image corresponding to the direction provided
   -- X pixels from the left
   -- Y pixels from the top
-  -- degreeLR16 must be one of 
+  -- degreeLR16 must be one of
   -- 0, 23, 45, 68, 90, 113, 135, 158, 180
   -- -23, -45, -68, -90, -113, -135, -158
   directionFile = DisplayTurn16FileName[degreeLR16]
@@ -635,10 +635,10 @@ local function writeOpenTxGVariablesIfTrue()
   end
   if WriteGVDirectionHome == true then
     model.setGlobalVariable(GVDirectionHome, 0, DirectionHome16Degrees)
-  end  
+  end
   if WriteGVDirectionHomeTurnLR == true then
     model.setGlobalVariable(GVDirectionHomeTurnLR, 0, DirectionHomeTurnLR16Degrees)
-  end  
+  end
   if WriteGVDistance == true then
     if DistanceToModel <= 1000 then
       model.setGlobalVariable(GVDistance, 0, math.floor(DistanceToModel) )
@@ -647,7 +647,7 @@ local function writeOpenTxGVariablesIfTrue()
     elseif (DistanceToModel/100) <= 1000 then
       model.setGlobalVariable(GVDistance, 0, math.floor(DistanceToModel/100) )
     end
-  end  
+  end
   if WriteGVTrip == true then
     if DistanceTrip <= 1000 then
       model.setGlobalVariable(GVTrip, 0, math.floor(DistanceTrip) )
@@ -674,7 +674,7 @@ local function playHeading16Degrees(degree16)
 end
 local function playTurnLR16Degrees(degreeLR16)
   -- Plays a direction to turn sound file corresponding to the direction provided
-  -- degreeLR16 must be one of 
+  -- degreeLR16 must be one of
   -- 0, 23, 45, 68, 90, 113, 135, 158, 180
   -- -23, -45, -68, -90, -113, -135, -158
   turnFile = SpeakTurnLR16FileName[degreeLR16]
@@ -691,10 +691,10 @@ end
 local function init_func()
   -- Called once when model is loaded
   -- This could be empty
-  
+
   -- model.getGlobalVariable(index [, phase])
   -- index is the OpenTx GV number, 0 is GV1, 1 is GV2 and so on
-  -- phase is the flight mode 
+  -- phase is the flight mode
 
 end
 local function bg_func()
@@ -705,14 +705,14 @@ local function bg_func()
 
   if updateGPSData() == true then
     -- Filter out inaccuracies due to sensor inaccuracies
-    -- Without this "Flying"/"Heading" directions are in often inaccurate 
+    -- Without this "Flying"/"Heading" directions are in often inaccurate
     checkDist = getDistanceBetweenCoordinates(GPSlatPrevious, GPSlonPrevious, GPSlat, GPSlon)
     if checkDist > GPSDistanceFilter then
       updateAllDistancesDirections()
 
       writeOpenTxGVariablesIfTrue()
-    end  
-  
+    end
+
     if getSpeakHeadingStatus() == true then
       timeSecondsCurrent = getSecondsElapsedSince2016()
       timeSecondsDifferenceHeading = timeSecondsCurrent - timeSecondsPreviousHead
@@ -721,14 +721,14 @@ local function bg_func()
         playHeading16Degrees(DirectionCurrent16Degrees)
       end
     end
-      
+
     if getSpeakTurnStatus() == true then
       timeSecondsCurrent = getSecondsElapsedSince2016()
       timeSecondsDifferenceTurn = timeSecondsCurrent - timeSecondsPreviousTurn
       if (timeSecondsDifferenceTurn >= SpeakTurnSeconds) then
         timeSecondsPreviousTurn = timeSecondsCurrent
         playTurnLR16Degrees(DirectionHomeTurnLR16Degrees)
-      end 
+      end
     end
 
   end
@@ -740,14 +740,14 @@ local function run_func(event)
 
   -- LCD / Display code
   lcd.clear()
-  
+
   -- lcd.drawText(x, y, text [, flags])
   -- Displays text
   -- text is the text to display
   -- flags are optional
   -- XXLSIZE, MIDSIZE, SMLSIZE, INVERS, BLINK
   lcd.drawText( 0, 0, TextHeader, MIDSIZE + INVERS)
-  
+
   if type(GPSDataTable) ~= "table" then
     lcd.drawText( ImageXpos, ImageYpos, "No GPS Data Yet!", MIDSIZE + BLINK)
   else
@@ -755,18 +755,18 @@ local function run_func(event)
       lcd.drawText( lcd.getLastPos()+2, 1, "Trip", SMLSIZE + INVERS)
       lcd.drawText( lcd.getLastPos()+1, 1, math.floor(DistanceTrip).."m", SMLSIZE)
     end
-  
+
     if DisplayDirectionCurrent == true then
       lcd.drawText( ImageXpos, 12, "Flying", MIDSIZE + INVERS)
       displayCompass16Degrees(DirectionCurrent16Degrees, ImageXpos, ImageYpos)
     end
-    
+
     nextImageXpos = ImageXpos + ImageXsize + ImageXmargin
     if  DisplayDirectionFind == true then
       lcd.drawText( nextImageXpos, 12, "Find", MIDSIZE + INVERS)
       displayCompass16Degrees(DirectionFind16Degrees, nextImageXpos, ImageYpos)
     end
-    
+
     nextImageXpos = nextImageXpos + ImageXsize + ImageXmargin
     if DisplayDirectionHome == true then
       lcd.drawText( nextImageXpos, 12, "Home", MIDSIZE + INVERS)
@@ -775,21 +775,21 @@ local function run_func(event)
     if DisplayDistanceHome == true then
       lcd.drawText( lcd.getLastPos(), 15, math.floor(DistanceToModel).."m", SMLSIZE)
     end
-    
+
     nextImageXpos = nextImageXpos + ImageXsize + ImageXmargin +2
     if DisplayDirectionHomeTurnLR == true then
       lcd.drawText( nextImageXpos, 12, "Turn  ", MIDSIZE + INVERS)
       displayTurnLR16Degrees(DirectionHomeTurnLR16Degrees, nextImageXpos-1, ImageYpos)
       --DisplayDirection16("N", nextImageXpos, ImageYpos)
     end
-    
-  --  lcd.drawText( lcd.getLastPos()+2, 40, " %", MIDSIZE) 
+
+  --  lcd.drawText( lcd.getLastPos()+2, 40, " %", MIDSIZE)
     if Debuging == true then
       print("Memory", collectgarbage("count"))
       printToDebugConsoleAllDistancesDirections()
     end
   end
-  
+
 end
 
 
