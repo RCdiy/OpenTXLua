@@ -10,7 +10,7 @@ These scripts are described on the website RCdiy.ca
 To use these scripts:
 - Click on the script type directory e.g. TELEMETRY
 - Click on the file to display it's contents e.g. 01GtStrd.lua
-- Right click on the file to download it to your computer
+- Right click on the "Raw" buttom to download/save it to your computer
 - Move/copy the file as described in the file e.g. SD Card Copy/SCRIPTS/TELEMETRY/01GtStrd.lua
 - Test the script on your computer using OpenTx Companion
   - Test instructions http://rcdiy.ca/telemetry-scripts-getting-started/ 
