@@ -1,3 +1,4 @@
+-- License https://www.gnu.org/licenses/gpl-3.0.en.html
 -- OpenTx Lua script
 -- TELEMETRY
 -- Place this file in the SD Card folder on your computer

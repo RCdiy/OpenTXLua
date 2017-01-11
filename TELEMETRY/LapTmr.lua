@@ -1,3 +1,4 @@
+-- License https://www.gnu.org/licenses/gpl-3.0.en.html
 -- OpenTx Lua script
 -- TELEMETRY
 -- Place this file in the SD Card folder on your computer and Tx
@@ -46,7 +47,7 @@ local SpeakLapTimeHours = 0 -- 1 hours, minutes, seconds else minutes, seconds
 
 local BeepOnLap = true
 local BeepFrequency = 200 -- Hz
-local BeemLengthMiliseconds = 200 
+local BeemLengthMiliseconds = 200
 -- File Paths
 -- location you placed the accompanying files
 local SoundFilesPath = "/SCRIPTS/SOUNDS/LapTmr/"
