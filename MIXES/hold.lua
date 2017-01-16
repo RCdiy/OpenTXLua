@@ -20,7 +20,6 @@
 -- Holds the input value.
 -- E.g. Keep a boat on a fixed throttle and rudder setting.
 -- Enabled using a logical or physical switch.
--- Audio "Hold Enabled" or "Hold Disabled"
 
 -- Upto 4 inputs may be configured.
 -- The inputs may be sticks, sliders, switches or channels (any OpenTx input).
@@ -37,14 +36,14 @@
 
 -- Configuration
 
--- Custom Scripts Screen - Select this script and configure inputs.
--- Mixer Screen - Create a mix using one of Hld1, Hld2, Hld3 or Hld4 as input.
+-- Custom Scripts Screen
+-- Select this script and configure inputs.
+
+-- Mixer Screen
+-- Create a mix using one of Hld1, Hld2, Hld3 or Hld4 as input.
 
 -- Change as desired
 
--- File Paths
--- location you placed the accompanying files
-local SoundFilesPath = "/SCRIPTS/SOUNDS/Hold/"
 
 
 -- ----------------------------------------------------------------------------------------
@@ -79,6 +78,7 @@ local inputs = {
                }
 
 local outputs = { "Hld1", "Hld2", "Hld3", "Hld4"}
+-- Maximum 4 characters
 
 local function run(Ip1, Sw1, Ip2, Sw2, Ip3, Sw3, Ip4, Sw4)
 
@@ -99,7 +99,6 @@ local function run(Ip1, Sw1, Ip2, Sw2, Ip3, Sw3, Ip4, Sw4)
     Output4 = Ip4
   end
 
-  print("returning", Output1, Output2, Output3, Output4)
   return Output1, Output2, Output3, Output4
 end
 
