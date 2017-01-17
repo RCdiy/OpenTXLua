@@ -13,7 +13,7 @@
 -- Thanks:  Kilrah
 
 -- Date: 2017 January 12
--- Update: none
+-- Update: 2017 January 17
 
 -- Description
 
@@ -21,18 +21,19 @@
 -- E.g. Keep a boat on a fixed throttle and rudder setting.
 -- Enabled using a logical or physical switch.
 
--- Upto 4 inputs may be configured.
--- The inputs may be sticks, sliders, switches or channels (any OpenTx input).
+-- Up to 4 inputs may be configured.
+--   The inputs may be sticks, sliders, switches or channels (any OpenTx input).
+--   If an input is not configured the corresponding output is zero.
 -- For each input a corresponding switch is to be provided.
--- The same switch may be used for all inputs.
+--   The same switch may be used for all inputs.
+--   When the switch is up/away the output equals the input.
+--   When the switch is not up/away the input value gets held and from then on
+--   the output is a fixed value till the switch is back up/away.
 
 -- 4 outputs are provided Hld1, Hld2, Hld3, Hld4.
--- THese outputs are to be used as inputs to the mix on the mixer screen.
--- The output is either a pass thru of the input or a fixed value.
--- When the switch is up/away the output equals the input.
--- When the switch is not up/away the input value gets held and from then on
--- the output is a fixed value till the switch is back down/away.
--- If an input is not configured the corresponding output is zero.
+--   These outputs are to be used as inputs to the mix on the mixer screen.
+--   The output is either a pass thru of the input or a fixed value.
+
 
 -- Configuration
 
