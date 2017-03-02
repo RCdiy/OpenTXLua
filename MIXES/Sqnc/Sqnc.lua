@@ -86,13 +86,13 @@
 
 -- Default values for configuration screen
 
-local delaySeconds = 20 -- The delay in seconds between start and end values
+local delaySeconds = 10 -- The delay in seconds between start and end values
 
-local startValue1 = 60 -- Precent, the default values displayed when configuring
+local startValue1 = -100 -- Precent, the default values displayed when configuring
 local startValue2 = 0
 local startValue3 = 0
 
-local endValue1 = 20 -- Precent, the default values displayed when configuring
+local endValue1 = 75 -- Precent, the default values displayed when configuring
 local endValue2 = 0
 local endValue3 = 0
 -- ----------------------------------------------------------------------------------------
