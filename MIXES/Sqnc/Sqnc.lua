@@ -48,13 +48,10 @@
 -- 	End Value  1 (-100 to 100) [E.g. 20]
 -- 	Start Value 2 
 -- 	End Value  2
--- 	Start Value 3 
--- 	End Value  3
 
 -- Sequence - Outputs
 -- 	Seq1 - output used as input to mix
 -- 	Seq2
--- 	Seq3
 -- 	Spoken messages when
 --    the sequence starts
 -- 	  the sequence stops
@@ -80,7 +77,7 @@
 -- Select this script and configure inputs.
 
 -- MIXER Screen
--- Create one or more mixes using one of Seq1, Seq2, Seq3 as input.
+-- Create one or more mixes using one of Seq1, Seq2 as input.
 
 -- Change as desired
 
@@ -90,11 +87,10 @@ local delaySeconds = 10 -- The delay in seconds between start and end values
 
 local startValue1 = -100 -- Precent, the default values displayed when configuring
 local startValue2 = 0
-local startValue3 = 0
 
 local endValue1 = 75 -- Precent, the default values displayed when configuring
 local endValue2 = 0
-local endValue3 = 0
+
 -- ----------------------------------------------------------------------------------------
 -- ----------------------------------------------------------------------------------------
 
@@ -139,22 +135,20 @@ local inputs = {
                  { "Start Val1", VALUE, -100, 100, startValue1 },
                  { "End Val1", VALUE, -100, 100, endValue1 },
                  { "Start Val2", VALUE, -100, 100, startValue2 },
-                 { "End Val2", VALUE, -100, 100, endValue2 },
-                 { "Start Val3", VALUE, -100, 100, startValue3 },
-                 { "End Val3", VALUE, -100, 100, endValue3 }
+                 { "End Val2", VALUE, -100, 100, endValue2 }
                } -- Maximum of 10 characters will be displayed.
 
-local outputs = { "Seq1", "Seq2", "Seq3" } -- Maximum 4 characters
+local outputs = { "Seq1", "Seq2" } -- Maximum 4 characters
 
-local function run(switch, delay, start1, end1, start2, end2, start3, end3)
-  --print("Switch ", switch, delay, start1, end1, start2, end2, start3, end3)
+local function run(switch, delay, start1, end1, start2, end2)
+  --print("Switch ", switch, delay, start1, end1, start2, end2)
 
   if switch > 0 and startTime == 0 then -- Error, Script loaded with switch down
     if not errorPlayed then
       playFile(soundFilesPath..errorFile)
       errorPlayed = true
     end
-    return start1*10.24, start2*10.24, start3*10.24
+    return start1*10.24, start2*10.24
   elseif switch > 0 then -- Switch is down/towards, Countdown start
     if not startPlayed then -- Announce start, Play file only once
       playFile(soundFilesPath..startFile)
@@ -170,13 +164,13 @@ local function run(switch, delay, start1, end1, start2, end2, start3, end3)
         playNumber(remainSeconds,0) -- 0 no units played
         playedSeconds = remainSeconds
       end
-      return start1*10.24, start2*10.24, start3*10.24
+      return start1*10.24, start2*10.24
     else -- Countdown ended
       if not stopPlayed then -- Announce end, Play file only once
         playFile(soundFilesPath..endFile)
         stopPlayed = true
       end
-      return end1*10.24, end2*10.24, end3*10.24
+      return end1*10.24, end2*10.24
     end
   else -- Countdown not started or has been interupted
     startTime = getTimeSeconds()
@@ -187,7 +181,7 @@ local function run(switch, delay, start1, end1, start2, end2, start3, end3)
       startPlayed = false -- Reset variables
       stopPlayed = false
     end
-    return start1*10.24, start2*10.24, start3*10.24
+    return start1*10.24, start2*10.24
   end
 end
 
