@@ -78,6 +78,8 @@
 
 -- MIXER Screen
 -- Create one or more mixes using one of Seq1, Seq2 as input.
+-- If you want only this script's values to be used on a channel set Multiplex
+--   to Replace.
 
 -- Change as desired
 
@@ -103,7 +105,7 @@ local endValue2 = 0
 -- must use the word "local" before the variable
 
 -- Sound
-local soundFilesPath = "/SCRIPTS/SOUNDS/Sqnc/"
+local soundFilesPath = "/SCRIPTS/MIXES/Sqnc/"
 local startFile = "start.wav"
 local endFile = "end.wav"
 local stopFile = "stop.wav"
