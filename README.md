@@ -1,5 +1,5 @@
-# OpenTxLua
-Lua scripts for the OpenTx software environment.
+# OpenTX Lua Scripts
+Lua scripts for the OpenTX software environment.
 
 http://RCdiy.ca
 
@@ -12,7 +12,7 @@ To use these scripts:
 - Click on the file to display it's contents e.g. 01GtStrd.lua
 - Right click on the "Raw" buttom to download/save it to your computer
 - Move/copy the file as described in the file e.g. SD Card Copy/SCRIPTS/TELEMETRY/01GtSt.lua
-- Test the script on your computer using OpenTx Companion
+- Test the script on your computer using OpenTX Companion
   - Test instructions http://rcdiy.ca/telemetry-scripts-getting-started/
 
 To submit requests for a new script to be written or to contribute yours please send in an email.
@@ -21,17 +21,17 @@ Depending on demand this repository may be opened up so others may help maintain
 
 Script Submission Conditions
 - Permission to modify your scripts (retaining author credit to you)
-- Working on the current version of OpenTx Companion
+- Working on the current version of OpenTX Companion
 - Documentation as suggested below
 
 Suggested Documentation
 
-    OpenTx Lua script
+    OpenTX Lua script
     TELEMETRY
 
     Place this file in SD Card copy on your computer > /SCRIPTS/TELEMETRY/<name>.lua
 
-    Works On OpenTx Companion Version: 2.1.8
+    Works On OpenTX Companion Version: 2.1.8
 
     Author: RCdiy
    Web: http://RCdiy.ca
@@ -53,11 +53,11 @@ Suggested Documentation
 
     Note
 
-      The OpenTx global variables have a 1024 limit.
+      The OpenTX global variables have a 1024 limit.
 
       mAh values are expressed as mAh/100
 
-      2800 mAh will be 28 when stored in an OpenTx global variables
+      2800 mAh will be 28 when stored in an OpenTX global variables
 
       800 mAh will be 8
 
@@ -65,7 +65,7 @@ Suggested Documentation
 
       mAh (calculated sensor based on VFAS, FrSky FAS-40)
 
-    Global OpenTx variables used  
+    Global OpenTX variables used  
       GV1 = Read battery capacity provided as mAh/100, 2800 mAh would be 28, 800 mAh would be 8
 
       GV2 = Write mAh remaining
