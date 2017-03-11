@@ -1,12 +1,12 @@
 -- License https://www.gnu.org/licenses/gpl-3.0.en.html
--- OpenTx Lua script
+-- OpenTX Lua script
 -- TELEMETRY
 -- Place this file in the SD Card folder on your computer
 -- SD Card /SCRIPTS/TELEMETRY/
 -- Place the accompanying image files in /SCRIPTS/BMP/GPS/
 -- Place the accompanying sound files in /SCRIPTS/SOUNDS/GPS/
 
--- Works On OpenTx Companion Version: 2.1.8
+-- Works On OpenTX Companion Version: 2.1.8
 -- Works With Sensor: FrSky GPS
 
 -- Author: RCdiy
@@ -37,12 +37,12 @@
 -- "Trip" is the accumulated distance between GPS coordinates, distance flown ground track
 -- Display of each is optional, on by default
 
--- Writes directions to OpenTx global variables
+-- Writes directions to OpenTX global variables
 -- Writes of each is optional, off by default
 
--- Writes distances to OpenTx global variables
+-- Writes distances to OpenTX global variables
 -- Write of each is optional, off by default
--- OpenTx global variables have a range of -1024 to 1024
+-- OpenTX global variables have a range of -1024 to 1024
 -- When a distance exceeds 1024 the distance/10 is written
 -- When distance/10 exceeds 1024 the distance/100 is written
 -- When distance/100 exceeds 1024 no write takes place
@@ -74,11 +74,11 @@
 
 
 -- Note
--- The OpenTx global variables have a -1024 to 1024 limit.
+-- The OpenTX global variables have a -1024 to 1024 limit.
 
 -- Sensors
 -- GPS
--- Use GPS sensor name from OpenTx TELEMETRY screen
+-- Use GPS sensor name from OpenTX TELEMETRY screen
 local GPSSensorName = "GPS"
 
 local SensorAccuracy = 2.5 -- meters GPS accuracy as per manual
@@ -114,7 +114,7 @@ local DisplayDirectionHomeTurnLR = true
 local DisplayDistanceHome = true
 local DisplayTrip = true
 
--- Global OpenTx variables (Global to the model)
+-- Global OpenTX variables (Global to the model)
 -- Change as desired
 -- GV1 = "Flying" / "Heading"
 -- GV2 = "Find"
@@ -627,7 +627,7 @@ local function displayTurnLR16Degrees(degreeLR16, X, Y)
   end
 end
 
-local function writeOpenTxGVariablesIfTrue()
+local function writeOpenTXGVariablesIfTrue()
   if WriteGVDirectionHeading == true then
     model.setGlobalVariable(GVDirectionHeading, 0, DirectionCurrent16Degrees)
   end
@@ -694,7 +694,7 @@ local function init_func()
   -- This could be empty
 
   -- model.getGlobalVariable(index [, phase])
-  -- index is the OpenTx GV number, 0 is GV1, 1 is GV2 and so on
+  -- index is the OpenTX GV number, 0 is GV1, 1 is GV2 and so on
   -- phase is the flight mode
 
 end
@@ -711,7 +711,7 @@ local function bg_func()
     if checkDist > GPSDistanceFilter then
       updateAllDistancesDirections()
 
-      writeOpenTxGVariablesIfTrue()
+      writeOpenTXGVariablesIfTrue()
     end
 
     if getSpeakHeadingStatus() == true then

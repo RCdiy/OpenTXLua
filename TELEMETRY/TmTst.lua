@@ -1,10 +1,10 @@
 -- License https://www.gnu.org/licenses/gpl-3.0.en.html
--- OpenTx Lua script
+-- OpenTX Lua script
 -- TELEMETRY
 -- Place this file in the SD Card folder on your computer
 -- SD Card /SCRIPTS/TELEMETRY/
 
--- Works On OpenTx Companion Version: 2.1.8
+-- Works On OpenTX Companion Version: 2.1.8
 -- Works With Sensor: none
 
 -- Author: RCdiy
@@ -106,7 +106,7 @@ local function init_func()
   -- This could be empty
 
   -- model.getGlobalVariable(index [, phase])
-  -- index is the OpenTx GV number, 0 is GV1, 1 is GV2 and so on
+  -- index is the OpenTX GV number, 0 is GV1, 1 is GV2 and so on
   -- phase is the flight mode
 
 end

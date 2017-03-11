@@ -1,9 +1,9 @@
 -- License https://www.gnu.org/licenses/gpl-3.0.en.html
--- OpenTx Lua script
+-- OpenTX Lua script
 -- TELEMETRY
 -- Place this file in SD Card copy on your computer > /SCRIPTS/TELEMETRY/<name>.lua
 
--- Works On OpenTx Companion Version: 2.1.8
+-- Works On OpenTX Companion Version: 2.1.8
 
 -- Author: RC diy
 -- Web: http://RCdiy.ca
@@ -15,7 +15,7 @@
 -- Sensors
 -- RxBt
 
--- Global OpenTx variables used
+-- Global OpenTX variables used
 -- None
 
 -- Global Lua environment variables used

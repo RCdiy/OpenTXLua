@@ -1,12 +1,12 @@
 -- License https://www.gnu.org/licenses/gpl-3.0.en.html
--- OpenTx Lua script
+-- OpenTX Lua script
 -- TELEMETRY
 -- Place this file in the SD Card folder on your computer and Tx
 -- SD Card /SCRIPTS/TELEMETRY/
 -- Place the accompanying sound files in /SCRIPTS/SOUNDS/LapTmr/
 -- Further instructions http://rcdiy.ca/telemetry-scripts-getting-started/
 
--- Works On OpenTx Version: 2.1.8 to 2.1.9
+-- Works On OpenTX Version: 2.1.8 to 2.1.9
 -- Works With Sensor: none
 
 -- Author: RCdiy
@@ -24,7 +24,7 @@
 -- Lap recorded by a second physical or logical switch.
 -- Reset to zero by Timer switch being set to off and Lap switch set on.
 -- Default Timer switch is "ls1" (logical switch one).
--- OpenTx "ls1" set to a>x, THR, -100
+-- OpenTX "ls1" set to a>x, THR, -100
 -- Default Lap switch is "sh", a momentary switch.
 
 -- Change as desired

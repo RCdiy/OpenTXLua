@@ -1,10 +1,10 @@
 -- License https://www.gnu.org/licenses/gpl-3.0.en.html
--- OpenTx Lua script
+-- OpenTX Lua script
 -- TELEMETRY
 -- Place this file in SD Card copy on your computer > /SCRIPTS/TELEMETRY/
 -- Place the accompanying sound files in /SOUNDS/en/
 
--- Works On OpenTx Companion Version: 2.1.8
+-- Works On OpenTX Companion Version: 2.1.8
 -- Works With Sensor: FrSky FAS40S
 
 -- Author: RCdiy
@@ -27,13 +27,13 @@
 -- This reserve is easily changed within the script.
 
 -- Note
--- The OpenTx global variables have a 1024 limit.
+-- The OpenTX global variables have a 1024 limit.
 -- mAh values are expressed as mAh/100
--- 2800 mAh will be 28 when stored in an OpenTx global variables
+-- 2800 mAh will be 28 when stored in an OpenTX global variables
 -- 800 mAh will be 8
 
 -- Tips
--- The GV values (Global OpenTx Variables) that appear on the Tx are global
+-- The GV values (Global OpenTX Variables) that appear on the Tx are global
 -- to that model, not across models.
 -- Standardise accross all your models which GV will be used for battery
 -- capacity. For each model you can set different battery capacities.
@@ -51,10 +51,10 @@
 
 -- Sensors
 -- mAh (calculated sensor based on VFAS, FrSky FAS-40)
--- Use consumption sensor name from OpenTx TELEMETRY screen
+-- Use consumption sensor name from OpenTX TELEMETRY screen
 local SensorName = "mAh"
 
--- Global OpenTx variables used (Global to the model)
+-- Global OpenTX variables used (Global to the model)
 -- GV7 = Read battery capacity provided as mAh/100, 2800 mAh would be 28, 800 mAh would be 8
 -- GV8 = Write mAh remaining
 -- GV9 = Write  remaining
@@ -95,7 +95,7 @@ local function init_func()
   -- This could be empty
 
   -- model.getGlobalVariable(index [, phase])
-  -- index is the OpenTx GV number, 0 is GV1, 1 is GV2 and so on
+  -- index is the OpenTX GV number, 0 is GV1, 1 is GV2 and so on
   -- phase is the flight mode
   BattryCapacityFullmAh = model.getGlobalVariable(GVBatteryCapacity, 0) * 100
   BattryCapacitymAh = BattryCapacityFullmAh * (100-BatteryReservePercent)/100
@@ -114,7 +114,7 @@ local function bg_func()
   end
 
   -- model.setGlobalVariable(index, phase, value)
-  -- index is the OpenTx GV number, 0 is GV1, 1 is GV2 and so on
+  -- index is the OpenTX GV number, 0 is GV1, 1 is GV2 and so on
   -- phase is the flight mode
   -- value must be between -1024 and 1024
   if WriteGVBatteryRemainmAh == true then

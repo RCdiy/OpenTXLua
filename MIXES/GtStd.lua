@@ -1,11 +1,11 @@
 -- License https://www.gnu.org/licenses/gpl-3.0.en.html
--- OpenTx Lua script
+-- OpenTX Lua script
 -- MIXES
 -- Place this file in the SD Card folder on your computer and Tx
 -- SD Card /SCRIPTS/MIXES/
 -- Further instructions http://rcdiy.ca/mix-scripts-getting-started/
 
--- Works On OpenTx Version: 2.1.8 to 2.1.9
+-- Works On OpenTX Version: 2.1.8 to 2.1.9
 
 -- Author: RCdiy
 -- Web: http://RCdiy.ca
@@ -45,7 +45,7 @@ local inputs = {
                }
 -- The display prompt and input type on the left of the custom scripts screen.
 -- Maximum of 10 characters will be displayed.
--- SOURCE provides a popup menu from which any OpenTx input may be selected.
+-- SOURCE provides a popup menu from which any OpenTX input may be selected.
 --  Inputs may be switches, sliders, sticks, chanels or outputs from other
 --  mixer scripts.
 -- VALUE provides a number entry field ranging from -100 to 100 default of 5.

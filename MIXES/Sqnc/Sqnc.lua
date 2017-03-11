@@ -1,5 +1,5 @@
 -- License https://www.gnu.org/licenses/gpl-3.0.en.html
--- OpenTx Lua script
+-- OpenTX Lua script
 -- MIXES
 -- Place this file in the SD Card folder on your computer and Tx
 -- SD Card /SCRIPTS/MIXES/
@@ -8,7 +8,7 @@
 
 -- Further instructions http://rcdiy.ca/mixer-scripts-getting-started/
 
--- Works On OpenTx Version: 2.1.8 to 2.1.9
+-- Works On OpenTX Version: 2.1.8 to 2.1.9
 
 -- Author: RCdiy
 -- Web: http://RCdiy.ca

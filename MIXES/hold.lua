@@ -1,11 +1,11 @@
 -- License https://www.gnu.org/licenses/gpl-3.0.en.html
--- OpenTx Lua script
+-- OpenTX Lua script
 -- MIXES
 -- Place this file in the SD Card folder on your computer and Tx
 -- SD Card /SCRIPTS/MIXES/
 -- Further instructions http://rcdiy.ca/mixer-scripts-getting-started/
 
--- Works On OpenTx Version: 2.1.8 to 2.1.9
+-- Works On OpenTX Version: 2.1.8 to 2.1.9
 
 -- Author: RCdiy
 -- Web: http://RCdiy.ca
@@ -22,7 +22,7 @@
 -- Enabled using a logical or physical switch.
 
 -- Up to 4 inputs may be configured.
---   The inputs may be sticks, sliders, switches or channels (any OpenTx input).
+--   The inputs may be sticks, sliders, switches or channels (any OpenTX input).
 --   If an input is not configured the corresponding output is zero.
 -- For each input a corresponding switch is to be provided.
 --   The same switch may be used for all inputs.
