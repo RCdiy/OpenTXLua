@@ -46,7 +46,7 @@ local function DisplayTraingle(x, y, directionDeg, size, tailAngle, thickness)
   local x0, y0, x1, y1, x2, y2, x3, y3, count = 0, 0, 0, 0, 0, 0, 0, 0, 0
   while thickness > 0 do
     x0 = x + (count * math.sin(math.rad(directionDeg))) -- move center for thickness
-    y0 = y + (count * math.cos(math.rad(directionDeg)))
+    y0 = y - (count * math.cos(math.rad(directionDeg)))
     x1 = x + (size * math.sin(math.rad(directionDeg))) -- tip
     y1 = y - (size * math.cos(math.rad(directionDeg)))
     x2 = x + (size * math.sin(math.rad(directionDeg+tailAngle))) -- tail
