@@ -1,8 +1,11 @@
 -- License https://www.gnu.org/licenses/gpl-3.0.en.html
 -- OpenTX Lua script
 -- TELEMETRY
--- Place the script file on Tx SD Card /SCRIPTS/TELEMETRY/
--- Place the accompanying sound files in /SCRIPTS/TELEMETRY/mahRe2/
+
+-- File Locations On The Transmitter's SD Card
+--  This script file  /SCRIPTS/TELEMETRY/
+--  Sound files       /SCRIPTS/TELEMETRY/mahRe2/
+
 -- Works On OpenTX Companion Version: 2.2
 -- Works With Sensor: FrSky FAS40S
 --
@@ -82,6 +85,8 @@
 -- 				critical announcement will be made every 10 seconds.
 
 -- Configurations
+--  For help using telemetry scripts
+--    http://rcdiy.ca/telemetry-scripts-getting-started/
 local Title = "Flight Battery Monitor"
 
 -- Sensors
