@@ -275,7 +275,7 @@ local txArrowThickness = 10
 local rxDirCurDeg     -- updated in zeroAllDistancesDirections, updateAllrxDistancesDirections, updateAlltxDistancesDirections
 local rxFindDirDeg    -- updated in zeroAllDistancesDirections, updateAllrxDistancesDirections, updateAlltxDistancesDirections
 local rxToTxDirDeg    -- updated in zeroAllDistancesDirections, updateAllrxDistancesDirections, updateAlltxDistancesDirections
-local rxToTxTurnLRDeg -- updated in zeroAllDistancesDirections, updateAllrxDistancesDirections, updateAlltxDistancesDirections
+local rxToTxTurnDeg -- updated in zeroAllDistancesDirections, updateAllrxDistancesDirections, updateAlltxDistancesDirections
 
 -- Direction Tx/Pilot
 local txDirCurDeg -- updated in zeroAllDistancesDirections, updateAlltxDistancesDirections
@@ -388,7 +388,7 @@ local function printToDebugConsoleAllDistancesDirections()
             "txDirCurDeg "..limitDecimalPlaces(txDirCurDeg,2).." rxDirCurDeg "..limitDecimalPlaces(rxDirCurDeg,2),
             "rxFindDirDeg "..limitDecimalPlaces(rxFindDirDeg,2),
             "rxFindDir16Deg "..rxFindDir16Deg.." rxToTxDirDeg "..limitDecimalPlaces(rxToTxDirDeg,2),
-            "rxToTxDir16Deg "..rxToTxDir16Deg.."rxToTxTurnLRDeg "..limitDecimalPlaces(rxToTxTurnLRDeg,2),
+            "rxToTxDir16Deg "..rxToTxDir16Deg.."rxToTxTurnDeg "..limitDecimalPlaces(rxToTxTurnDeg,2),
             "rxToTxTurnLR16Deg "..rxToTxTurnLR16Deg.." tx_rxDistance "..tx_rxDistance,
             "rxMoved "..rxMoved.." rxTrip "..rxTrip.." txMoved "..txMoved.." txTrip "..txTrip
           )
@@ -400,7 +400,7 @@ local function zeroAllDistancesDirections()
   rxDirCurDeg = 0
   rxFindDirDeg = 0
   rxToTxDirDeg = 0
-  rxToTxTurnLRDeg = 0
+  rxToTxTurnDeg = 0
   -- Direction Tx/Pilot
   txDirCurDeg = 0
 
@@ -545,12 +545,12 @@ local function updateAllrxDistancesDirections()
   rxDirCurDeg = getDegreesBetweenCoordinates(rxLatPrevious, rxLonPrevious, rxLat, rxLon)
   rxFindDirDeg = getDegreesBetweenCoordinates(txLat, txLon, rxLat, rxLon)
   rxToTxDirDeg = (rxFindDirDeg + 180)%360
-  rxToTxTurnLRDeg = rxToTxDirDeg - rxDirCurDeg
+  rxToTxTurnDeg = rxToTxDirDeg - rxDirCurDeg
 
   -- Directions in 1 of 16 positions compass rose angles
   rxFindDir16Deg = getCompassDirection16Degrees(rxFindDirDeg)
   rxToTxDir16Deg = getCompassDirection16Degrees(rxToTxDirDeg)
-  rxToTxTurnLR16Deg = getTurnAmountLR16Degrees(rxToTxTurnLRDeg)
+  rxToTxTurnLR16Deg = getTurnAmountLR16Degrees(rxToTxTurnDeg)
 
   -- Distances
   rxMoved = getMetersBetweenCoordinates(rxLatPrevious, rxLonPrevious, rxLat, rxLon)
@@ -570,12 +570,12 @@ local function updateAlltxDistancesDirections()
   txDirCurDeg = getDegreesBetweenCoordinates(txLatPrevious, txLonPrevious, txLat, txLon)
   rxFindDirDeg = getDegreesBetweenCoordinates(txLat, txLon, rxLat, rxLon)
   rxToTxDirDeg = (rxFindDirDeg + 180)%360
-  rxToTxTurnLRDeg = rxToTxDirDeg - rxDirCurDeg
+  rxToTxTurnDeg = rxToTxDirDeg - rxDirCurDeg
 
   -- Directions in 1 of 16 positions compass rose angles
   rxFindDir16Deg = getCompassDirection16Degrees(rxFindDirDeg)
   rxToTxDir16Deg = getCompassDirection16Degrees(rxToTxDirDeg)
-  rxToTxTurnLR16Deg = getTurnAmountLR16Degrees(rxToTxTurnLRDeg)
+  rxToTxTurnLR16Deg = getTurnAmountLR16Degrees(rxToTxTurnDeg)
 
   -- Distances
   txMoved = getMetersBetweenCoordinates(txLatPrevious, txLonPrevious, txLat, txLon)
@@ -1049,7 +1049,7 @@ local function run_func(event)
 
     if DisplayDirectionToTurnAircraftToComeHome then
       lcdXpos = displayAircraftArrow(lcdXpos, LCDyPos, "  Turn  ", INVERS, fontSize,
-                                                            rxToTxTurnLRDeg, "LR")
+                                                            rxToTxTurnLR16Deg, "LR")
     end
 
   end
