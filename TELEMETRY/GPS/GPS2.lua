@@ -12,8 +12,8 @@
 -- Author: RCdiy
 -- Web: http://RCdiy.ca
 
--- Thanks:  Carbo (forum name) for requesting the ability to use 2 GPS sensors
---            and for german translations of the announcements
+-- Thanks:  Carbo (forum name) for requesting the ability to use 2 GPS sensors,
+--            testing, images, and for german translations of the announcements
 --          Painless360
 --            http://painless360.webs.com/
 --          GIS Map Info
