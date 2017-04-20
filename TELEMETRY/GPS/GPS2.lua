@@ -108,10 +108,6 @@ local PilotGPSSensorName = "GPS5" -- Optional Pilot GPS, attached to Tx
 -- Change as required
 local AircraftAltitudeSensorName = "GAlt"
 local AircraftSpeedSensorName = "GSpd"
--- Units of the sensors as shown on the OpenTX TELEMETRY screen
---  Complete list https://opentx.gitbooks.io/opentx-2-2-lua-reference-guide/content/appendix/units.html
--- local AircraftAltitudeSensorUnits = 9 -- 9 UNIT_METERS, 10 UNIT_FEET
--- local AircraftSpeedSensorUnits = 7 -- 7 UNIT_KMH, 8 UNIT_MPH, 4 UNIT_KTS
 
 -- Display Distance Text
 --  Set to true or false
@@ -148,7 +144,7 @@ local AnnouncementsSwitchPosition = "D"
 
 -- Announcement Intervals
 --  In seconds
---  If the Altitude or Speed sensors are set to none then there corresponding
+--  If the Altitude or Speed sensors are set to none then the corresponding
 --    announcements will not be made
 -- Change as desired
 local AnnounceAircraftDistanceToPilotSeconds = 60
