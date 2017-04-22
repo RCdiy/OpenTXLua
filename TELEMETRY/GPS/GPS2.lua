@@ -38,7 +38,7 @@
 -- Reads coordinates from up to 2 GPS sensors
 --  One GPS on the aircraft and an optional GPS on the Tx (Pilot-Home position)
 --  When only one GPS is used the Pilot-Home position is set to where the GPS
---    strats reporting coordinates or when telemetry is reset. This is usually
+--    starts reporting coordinates or when telemetry is reset. This is usually
 --    the flying field's location.
 -- Reads optional altitude and speed sensors
 --  These sensors are used for return home announcements
@@ -98,9 +98,10 @@
 
 -- Sensors
 --  Locate sensor name(s) from the OpenTX TELEMETRY screen
+-- Pilot GPS is optional; Set to "" for none
 -- Change as required
 local AircraftGPSSensorName = "GPS" -- Aircraft GPS, attached to Rx
-local PilotGPSSensorName = "GPS5" -- Optional Pilot GPS, attached to Tx
+local PilotGPSSensorName = "" -- Optional Pilot GPS, attached to Tx
 
 -- Optional Sensors
 --  Set to "" for none/ignore
