@@ -11,7 +11,7 @@ These scripts are documented on the website and within the script files.
 
 - Click on the script type directory e.g. TELEMETRY
 - Click on the file to display it's contents e.g. 01GtStrd.lua
-- Right click on the "Raw" buttom to download/save it to your computer
+- Right click on the "Raw" button to download/save it to your computer
 - Ensure that it has a .lua extension. If it has a .txt or a .lua.txt extension change it to .lua
 
 ## Use The Script
