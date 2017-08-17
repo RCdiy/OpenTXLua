@@ -10,19 +10,17 @@ These scripts are documented on the website and within the script files.
 ## Download
 
 - Click on the script type directory e.g. TELEMETRY
-- Click on the file to display it's contents e.g. 01GtStrd.lua
-- Right click on the "Raw" button to download/save it to your computer
-- Ensure that it has a .lua extension. If it has a .txt or a .lua.txt extension change it to .lua
+- Click on subsequent folders and follow directions in the read me files.
 
 ## Use The Script
 
 - View the script in a text editor to get instructions on where to place the files and configuration options
-- Move/copy the file as described in the file e.g. SD Card Copy/SCRIPTS/TELEMETRY/01GtSt.lua
-- Test the script on your computer using OpenTX Companion
-  - Test instructions http://rcdiy.ca/telemetry-scripts-getting-started/
+- New to lua scripts?
+  - [http://rcdiy.ca/telemetry-scripts-getting-started/](http://rcdiy.ca/telemetry-scripts-getting-started/)
+  - [http://rcdiy.ca/mix-scripts-getting-started/](http://rcdiy.ca/mix-scripts-getting-started/)
 
 ## Contribute
-- To contribute yours scripts to this repository please send in an email
+- To contribute yours scripts to this repository please send in an email info@RCdiy.ca
 
 Depending on demand this repository may be opened up so others may help maintain it.
 
