@@ -53,8 +53,9 @@ local headspeed = 0
 local function init()
   gearratio = math.floor((maingear / piniongear) * 100 ) / 100
   rpm = getValue(RpmSensorName)
-  end
-  local function background()
+end
+
+local function background()
   rpm = getValue(RpmSensorName)
 
   headspeed = math.floor((rpm / gearratio) * 100 ) / 100
@@ -63,9 +64,8 @@ end
 
 local function run(event)
   background()
-  print(event)
-
   lcd.clear()
+  
   lcd.drawText(1,0,"Headspeed",INVERS)
 
   lcd.drawText(1,15,"Main Gear:",SMLSIZE)
