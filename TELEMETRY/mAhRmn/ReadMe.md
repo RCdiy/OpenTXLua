@@ -10,6 +10,7 @@
 ## .Otx Files
 * Click on the file
   * On the next page click on Download
+
 Do not right click on an .otx file to download it.
 
 # Configuration
