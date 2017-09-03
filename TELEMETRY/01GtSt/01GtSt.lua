@@ -34,6 +34,9 @@ local BatterySensor = "RxBt"
 local ReceiverBatteryVoltage_current = 0.0
 local ReceiverBatteryVoltage_previous = 0.0
 local ReceiverBatteryVoltage_startup = 0.0
+local x = 0
+local y = 0
+local fh = 10
 
 local function init_func()
   -- Called once when model is loaded
@@ -65,19 +68,6 @@ local function run_func(event)
   -- LCD / Display code
   lcd.clear()
 
-
-
-  -- lcd.drawFilledRectangle(x, y, w, h [, flags])
-  -- Displays a filled in box
-  -- This will paint over existing pixels
-  -- x,y location with 0,0 left, top
-  -- w,h width and height in pixels
-  -- flags are optional
-  -- SOLID, GREY_DEFAULT, FORCE (black), ERASE (white)
-  --lcd.drawFilledRectangle(2,2,208,60, SOLID)
-  --lcd.drawFilledRectangle(4,4,204,56, GREY_DEFAULT)
-  --lcd.drawFilledRectangle(6,6,200,52, ERASE)
-
   -- lcd.drawChannel(x, y, source, flags)
   -- Displays sensor value with units
   -- x,y location with 0,0 left, top
@@ -85,11 +75,16 @@ local function run_func(event)
   -- flags are optional
   -- 0 black on white text, 1 blink,
   -- 2 white on black text, 3 blink
+  x = 1
+  y = 1
   if ReceiverBatteryVoltage_current == ReceiverBatteryVoltage_startup then
-    lcd.drawChannel(20,10, BatterySensor)
+    lcd.drawChannel(x,y, BatterySensor)
   else
-    lcd.drawChannel(20,10, BatterySensor, 3)
+    lcd.drawChannel(x,y, BatterySensor, BLINK)
   end
+  -- lcd.getLastPos()
+  -- Returns the last pixel drawn position from the left
+  lcd.drawText( lcd.getLastPos(), y, " "..BatterySensor.." Sensor" )
 
   -- lcd.drawGauge(x, y, w, h, fill, maxfill)
   -- Draws a horizontal gauge, fills from left to right
@@ -97,8 +92,12 @@ local function run_func(event)
   -- w,h width and height in pixels
   -- fill is the current value (example 20 for 20%)
   -- maxfill is the max gauge value (example 100 for % scale)
-  lcd.drawGauge(40, 10, 160, 20, ReceiverBatteryVoltage_current, ReceiverBatteryVoltage_startup)
-
+  y = y + fh
+  if ReceiverBatteryVoltage_startup > 0 then
+    lcd.drawGauge(x, y, LCD_W-1, 2 * fh, ReceiverBatteryVoltage_current*10, ReceiverBatteryVoltage_startup*10)
+  else
+    lcd.drawText (x,y, "Rx or Simulator not on")
+  end
   -- lcd.drawNumber(x, y, value [, flags])
   -- Display numbers
   -- x,y location with 0,0 left, top
@@ -110,26 +109,8 @@ local function run_func(event)
   -- PREC2 is value/100 so 123 becomes 1.23
   -- if the value is 5.2 then 2 gets dropped
   -- to display 5.2, value x 10 PREC1
-  lcd.drawNumber(40, 40,  ReceiverBatteryVoltage_startup *10, PREC1)
-
-  -- lcd.drawRectangle(x, y, w, h [, flags])
-  -- Draws a box/frame
-  -- x,y location with 0,0 left, top
-  -- w,h width and height in pixels
-  -- flags, unsigned number drawing flags
-  -- SOLID, GREY_DEFAULT,
-  lcd.drawRectangle(26, 38, 175, 11, SOLID)
-
-  -- lcd.drawText(x, y, text [, flags])
-  -- Displays text
-  -- text is the text to display
-  -- flags are optional
-  -- XXLSIZE, MIDSIZE, SMLSIZE, INVERS, BLINK
-  lcd.drawText( 42, 40, "Volts "..BatterySensor.." value")
-
-  -- lcd.getLastPos()
-  -- Returns the last pixel drawn position from the left
-  lcd.drawText( lcd.getLastPos(), 40, " at start up.")
+  lcd.drawNumber(1, 40,  ReceiverBatteryVoltage_startup *10, PREC1)
+  lcd.drawText( lcd.getLastPos(), 40, "V at start up.")
 end
 
 
