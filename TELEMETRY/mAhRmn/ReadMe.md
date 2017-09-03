@@ -1,7 +1,8 @@
 # Download Instructions
 
 ## .Lua Files
-* Right click on the file
+* Click on the file
+  * On the next page right click on Raw
   * Save As/Download Linked File
 * **After download ensure it has a .lua extension**
   * if it is .txt or .lua.txt change it to .lua
@@ -10,8 +11,6 @@
 ## .Otx Files
 * Click on the file
   * On the next page click on Download
-
-Do not right click on an .otx file to download it.
 
 # Configuration
 * If you have not used a Telemetry script before please read this post
