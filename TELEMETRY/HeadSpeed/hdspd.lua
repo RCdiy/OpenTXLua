@@ -35,7 +35,6 @@
 
 -- Sensors
 --  Locate sensor name(s) from the OpenTX TELEMETRY screen
--- Pilot GPS is optional; Set to "" for none
 -- Change as required
 local RpmSensorName = "RPM"
 
@@ -65,7 +64,7 @@ end
 local function run(event)
   background()
   lcd.clear()
-  
+
   lcd.drawText(1,0,"Headspeed",INVERS)
 
   lcd.drawText(1,15,"Main Gear:",SMLSIZE)
