@@ -49,8 +49,8 @@ local BeepOnLap = true
 local BeepFrequency = 200 -- Hz
 local BeemLengthMiliseconds = 200
 -- File Paths
--- location you placed the accompanying files
-local SoundFilesPath = "/SCRIPTS/SOUNDS/LapTmr/"
+-- location you placed the accompanying sound files
+local SoundFilesPath = "/SCRIPTS/TELEMETRY/LapTmr/"
 
 
 -- ----------------------------------------------------------------------------------------
