@@ -73,7 +73,7 @@ local LapTimeList = {ElapsedTimeMiliseconds}
 local LapTimeRecorded = false
 -- Display
 local TextHeader = "Lap Timer"
-
+local TextSize = 0
 local Debuging = false
 
 local function getTimeMiliSeconds()
@@ -121,6 +121,12 @@ local function init_func()
   -- Called once when model is loaded or telemetry reset.
   StartTimeMiliseconds = -1
   ElapsedTimeMiliseconds = 0
+    -- XXLSIZE, MIDSIZE, SMLSIZE, INVERS, BLINK
+    if LCD_W > 128 then
+      TextSize = MIDSIZE
+    else
+      TextSize = 0
+    end
 end
 local function bg_func()
   -- Called periodically when screen is not visible
@@ -187,15 +193,16 @@ local function run_func(event)
   -- text is the text to display
   -- flags are optional
   -- XXLSIZE, MIDSIZE, SMLSIZE, INVERS, BLINK
-  lcd.drawText( 0, 0, TextHeader, MIDSIZE + INVERS)
+
+  lcd.drawText( 0, 0, TextHeader, TextSize + INVERS)
 
   -- lcd.drawText( lcd.getLastPos(), 15, "s", SMLSIZE)
-  x = lcd.getLastPos() + 4
-  lcd.drawText( x, 0, getMinutesSecondsHundrethsAsString(ElapsedTimeMiliseconds).."s", MIDSIZE)
-  x = lcd.getLastPos() + 4
-  lcd.drawText( x, 0, "Laps", MIDSIZE + INVERS)
-  x = lcd.getLastPos() + 4
-  lcd.drawText( x, 0, #LapTimeList-1, MIDSIZE)
+  x = lcd.getLastPos() + 2
+  lcd.drawText( x, 0, getMinutesSecondsHundrethsAsString(ElapsedTimeMiliseconds).."s", TextSize)
+  x = lcd.getLastPos() + 2
+  lcd.drawText( x, 0, "Laps", TextSize + INVERS)
+  x = lcd.getLastPos() + 2
+  lcd.drawText( x, 0, #LapTimeList-1, TextSize)
   rowHeight = 12
   x = 0
   y = rowHeight
@@ -206,7 +213,7 @@ local function run_func(event)
       x = lcd.getLastPos() + 3
       y = rowHeight
     end
-    lcd.drawText( x, y, getMinutesSecondsHundrethsAsString(LapTimeList[i]),MIDSIZE)
+    lcd.drawText( x, y, getMinutesSecondsHundrethsAsString(LapTimeList[i]),TextSize)
     y = y + rowHeight
   end
 
