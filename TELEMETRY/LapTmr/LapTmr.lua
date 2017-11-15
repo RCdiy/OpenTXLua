@@ -1,3 +1,20 @@
+--here the variables that where global
+--y	12
+--minutes	0
+--filePathName	/SCRIPTS/TELEMETRY/LapTmr/1.wav
+--x	0
+--now	357060
+--switchValue	-1024
+--rowHeight	12
+--seconds	8.24
+
+--stored the formatted string directly in the table, saving lots of memory during runtime.
+
+--added support for different lcd screen sizes. Will run as a widget with a widget loader. See my blog at RC groups.
+--L Shems
+--feel free to clean up code
+
+
 -- License https://www.gnu.org/licenses/gpl-3.0.en.html
 -- OpenTX Lua script
 -- TELEMETRY
@@ -39,7 +56,7 @@ local LapSwitch = "sh"
 local LapSwitchRecordPosition = "U"
 
 -- Audio
-local SpeakLapNumber = true
+--local SpeakLapNumber = true
 local SpeakLapTime = true
 
 local SpeakLapNumber = true
@@ -72,9 +89,11 @@ local LapTime = 0
 local LapTimeList = {ElapsedTimeMiliseconds}
 local LapTimeRecorded = false
 -- Display
-local TextHeader = "Lap Timer"
+local TextHeader = "LapTimer"
 local TextSize = 0
+local TextHeight = 12 
 local Debuging = false
+
 
 local function getTimeMiliSeconds()
 	-- Returns the number of miliseconds elapsed since the Tx was turned on
@@ -82,22 +101,23 @@ local function getTimeMiliSeconds()
 	-- getTime()
 	-- Return the time since the radio was started in multiple of 10ms
 	-- Number of 10ms ticks since the radio was started Example: run time: 12.54 seconds, return value: 1254
-  now = getTime() * 10
+  local now = getTime() * 10
   return now
 end
 
 local function getMinutesSecondsHundrethsAsString(miliseconds)
   -- Returns MM:SS.hh as a string
-  seconds = miliseconds/1000
-  minutes = math.floor(seconds/60) -- seconds/60 gives minutes
+ -- miliseconds = miliseconds or 0
+  local seconds = miliseconds/1000
+  local minutes = math.floor(seconds/60) -- seconds/60 gives minutes
   seconds = seconds % 60 -- seconds % 60 gives seconds
-  return string.format("%02d:%05.2f", minutes, seconds)
+  return  (string.format("%02d:%05.2f", minutes, seconds))
 end
 
 local function getSwitchPosition( switchID )
   -- Returns switch position as one of U,D,M
   -- Passed a switch identifier sa to sf, ls1 to ls32
-  switchValue = getValue(switchID)
+  local switchValue = getValue(switchID)
   if Debuging == true then
     print(switchValue)
   end
@@ -148,11 +168,11 @@ local function bg_func()
       if LapTimeRecorded == false then
         LapTime = ElapsedTimeMiliseconds - PreviousElapsedTimeMiliseconds
         PreviousElapsedTimeMiliseconds = ElapsedTimeMiliseconds
-        LapTimeList[#LapTimeList+1] = LapTime
+        LapTimeList[#LapTimeList+1] = getMinutesSecondsHundrethsAsString(LapTime)
         LapTimeRecorded = true
         playTone(BeepFrequency,BeemLengthMiliseconds,0)
         if (#LapTimeList-1) <= 16 then
-          filePathName = SoundFilesPath..tostring(#LapTimeList-1)..".wav"
+          local filePathName = SoundFilesPath..tostring(#LapTimeList-1)..".wav"
           playFile(filePathName)
         end
         -- playNumber(#LapTimeList-1,0)
@@ -197,26 +217,33 @@ local function run_func(event)
   lcd.drawText( 0, 0, TextHeader, TextSize + INVERS)
 
   -- lcd.drawText( lcd.getLastPos(), 15, "s", SMLSIZE)
-  x = lcd.getLastPos() + 2
-  lcd.drawText( x, 0, getMinutesSecondsHundrethsAsString(ElapsedTimeMiliseconds).."s", TextSize)
-  x = lcd.getLastPos() + 2
-  lcd.drawText( x, 0, "Laps", TextSize + INVERS)
-  x = lcd.getLastPos() + 2
+  local x = lcd.getLastPos() + 4
+  lcd.drawText( x, 0, getMinutesSecondsHundrethsAsString(ElapsedTimeMiliseconds), TextSize)
+  x = lcd.getLastPos() + 4
+  lcd.drawText( x, 0, "Lap", TextSize + INVERS)
+  x = lcd.getLastPos() + 4
   lcd.drawText( x, 0, #LapTimeList-1, TextSize)
-  rowHeight = 12
+  local rowHeight = math.floor(TextHeight + 2) --12
+  local rows = math.floor(LCD_H/rowHeight) 
+  local rowsMod=rows*rowHeight 
   x = 0
-  y = rowHeight
+  local y = rowHeight
+  local c = 1
+  lcd.drawText(x,rowHeight," ")
   -- i = 2 first entry is always 0:00.00 so skippind it
   for i = #LapTimeList, 2, -1 do
-    if y % 60 == 0 then
-      -- next column
-      x = lcd.getLastPos() + 3
+    if y %  (rowsMod or 60) == 0 then
+      c = c + 1-- next column
+      x = lcd.getLastPos() 
       y = rowHeight
     end
-    lcd.drawText( x, y, getMinutesSecondsHundrethsAsString(LapTimeList[i]),TextSize)
+    if (c > 1) and x > LCD_W - x/(c-1) then
+    else
+      lcd.drawText( x, y, LapTimeList[i],TextSize)
+    end
     y = y + rowHeight
   end
-
+  return 0
 end
 
 
