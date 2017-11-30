@@ -4,6 +4,7 @@
 --
 -- File Locations On The Transmitter's SD Card
 --  This script file  /SCRIPTS/FUNCTIONS/
+-- 	Accompanying sound files /SCRIPTS/FUNCTIONS/GoRace/
 
 -- Works On OpenTX Companion Version: 2.2
 
@@ -45,8 +46,10 @@
 -- Configurations
 --  For help using functions scripts
 --    http://rcdiy.ca/getting-started-with-lua-function-scripts/
-
-local startRaceSwitch = "sh"	-- Momentary switch recommended
+--	Configure this script to run as a function script.
+--	Select the switch "ON" as the switch and condition in the 1st column.
+--		ON	Play Script	GoRace
+local startRaceSwitch = "sh"	-- Triggers announcement
 local startRaceSwitchPosition = "TOWARDS" 	-- Switch active position
 																				--	"TOWARDS", "AWAY" or "MIDDLE"
 local randomTime = 5		-- Maximum delay is seconds
