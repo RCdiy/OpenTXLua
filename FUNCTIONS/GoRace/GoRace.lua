@@ -14,12 +14,12 @@
 -- Thanks: Dean Church
 
 -- Date: 2017 November 30
--- Update: 2017 November 30 RCdiy
+-- Update: 2017 December 2 RCdiy
 
 -- Changes/Additions:
 --  Removed debug code
 --	Changed how switch position UP, Down, Middle is implemented
---  Removed seperate function call for waitNowQue.
+--  Removed seperate function calls; Rewrote run function.
 
 -- To do: n/a
 
@@ -49,10 +49,10 @@
 --	Configure this script to run as a function script.
 --	Select the switch "ON" as the switch and condition in the 1st column.
 --		ON	Play Script	GoRace
-local startRaceSwitch = "sh"	-- Triggers announcement
+local startRaceSwitch = "sf"	-- Triggers announcement
 local startRaceSwitchPosition = "TOWARDS" 	-- Switch active position
 																				--	"TOWARDS", "AWAY" or "MIDDLE"
-local randomTime = 5		-- Maximum delay is seconds
+local randomTimeMilliseconds = 5000		-- Maximum delay
 
 local audioDir = "/SCRIPTS/FUNCTIONS/GoRace/" -- Location of script audio files
 local raceStartPreface = audioDir.."GoRace.wav"	-- Prepare to race announcement
@@ -62,7 +62,6 @@ local startTone 		= audioDir.."RaceTone.wav"	-- Race start sound
 
 local TITLE = "GoRace.lua"   -- .lua to start a race.
 local DEBUG = false
-local startSwitchActivated = false
 
 -- local DOWN, MIDDLE, UP = 1024, 0, -1024  --Switch position DOWN/Toward, MIDDLE, UP/Away
 if startRaceSwitchPosition == "TOWARDS" then startRaceSwitchPosition = 1024 end
@@ -71,116 +70,45 @@ if startRaceSwitchPosition == "AWAY" then startRaceSwitchPosition = -1024 end
 
 local startRaceSwitchID
 local startRaceSwitchVal = 0
-local startTimeMilliseconds = 0
-local raceStartPrefaceTime = 8000	-- Time to play raceStartPreface in milliSeconds
+--local startTimeMilliseconds = 0
+local raceStartPrefaceLengthMilliseconds = 8000	-- Time to play raceStartPreface in milliSeconds
+local startTonePlayed = false
 
-local targetTimeMilliSeconds = 0
+local targetTimeMilliseconds = 0
 local presentTimeMilliseconds = 0
-local waitInProgress = false
-
---[[ ******************************************************************
-to start Wait
-startTheWait(waitTime)		- all in mililiSeconds
-get present time 						= startTimeMilliseconds
-add wait time to presentTime		= targetTimeMilliSeconds
-show waiting. set waitInProgress	= true
---]]
-local function setWaitMiliSeconds(waitTime)
-	if waitInProgress == true then
-		return	-- do not restart the wait if we are waiting now
-	else
-		startTimeMilliseconds = getTime()*10
-		targetTimeMilliSeconds = waitTime + startTimeMilliseconds
-		waitInProgress = true
-	end
-end
+--local waitInProgress = false
+local startSequenceReset = true
 
 
-
--- ***************************************************
--- Function: getTelemetryId
--- Parameters: name
--- Desc: Gets global id of telemetry field name requested
-local function getTelemetryId(name)
-  local field = getFieldInfo(name)
-	if field then
-		return field.id
-	else
-		return -1
-	end
-end--[[getTelemetryId]]
-
--- Wait for an elapsed time in miliSecond
-local startTimeMilliseconds = 0
-local targetTimeMilliSeconds = 0
-local presentTimeMilliseconds = 0
-local waitInProgress = false
-
---[[ ******************************************************************
-to start Wait
-startTheWait(waitTime)		- all in mililiSeconds
-get present time 						= startTimeMilliseconds
-add wait time to presentTime		= targetTimeMilliSeconds
-show waiting. set waitInProgress	= true
---]]
-local function setWaitMiliSeconds(waitTime)
-	if waitInProgress == true then
-		return
-	else
-		startTimeMilliseconds = getTime()*10
-		targetTimeMilliSeconds = waitTime + startTimeMilliseconds
-		waitInProgress = true
-	end
-end
-
-
---#############################################################################
 local function init()
-
-	startSwitchActivated = false
-	startRaceSwitchID	= getTelemetryId(startRaceSwitch)
-	startTimeMilliseconds = 0
-	presentTimeMilliseconds = 0
-	waitInProgress = false
+	startRaceSwitchID	= getFieldInfo(startRaceSwitch).id --getTelemetryId(startRaceSwitch)
 end	--init()
 
---#############################################################################
---#############################################################################
---#############################################################################
---local playedRunOnce = false
-
 local function run()
-	local minutes
- 	local seconds
- 	local randomWait
- 	local remaining
-
-	if waitInProgress == false then -- check if start switch activated
-		presentTimeMilliseconds = getTime()*10		--convert to milliseconds
-		startRaceSwitchVal = getValue(startRaceSwitchID)
-		if startRaceSwitchVal == startRaceSwitchPosition
-		and startSwitchActivated == false	then
-			startSwitchActivated = true -- ensures that file plays once
+	presentTimeMilliseconds = getTime()*10
+	startRaceSwitchVal = getValue(startRaceSwitchID)
+	if presentTimeMilliseconds > targetTimeMilliseconds then
+		-- not in start sequence
+		if startRaceSwitchPosition ==  startRaceSwitchVal and startSequenceReset == true then
+			-- enter start sequence
+			startSequenceReset = false
+			startTonePlayed = false
 			playFile(raceStartPreface)
-			startTimeMilliseconds = getTime()*10 -- tick count of 10ms each tick to seconds.
-			randomWait = math.random(100, randomTime*1000)
-			targetTimeMilliSeconds = presentTimeMilliseconds + raceStartPrefaceTime + randomWait
-		end
-	end
-
-	if presentTimeMilliseconds > targetTimeMilliSeconds then
-		waitInProgress = false
-		if startRaceSwitchVal ~= startRaceSwitchPosition and startSwitchActivated == true then
-			playFile(startTone)
-
-			startSwitchActivated = false
+			targetTimeMilliseconds = presentTimeMilliseconds +
+																raceStartPrefaceLengthMilliseconds +
+																math.random(100, randomTimeMilliseconds)
 		end
 	else
-		waitInProgress = true
-		presentTimeMilliseconds = getTime()*10
+		-- in start sequence
+		if startTonePlayed == false then
+			playFile(startTone)
+			startTonePlayed = true
+		end
 	end
-	if startRaceSwitchVal ~= startRaceSwitchPosition and startSwitchActivated == true then
-		startSwitchActivated = false
+	if startRaceSwitchPosition ~=  startRaceSwitchVal then
+		--startTonePlayed = false
+		startSequenceReset = true
+		--targetTimeMilliseconds = 0
 	end
 
 end	-- run()
