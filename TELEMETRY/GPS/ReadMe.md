@@ -8,7 +8,7 @@
   * if it is .txt or .lua.txt change it to .lua
   * if is .html the download was done incorrectly
 
-## .Otx Files
+## .Otx & .Zip Files
 * Click on the file
   * On the next page click on Download
 
