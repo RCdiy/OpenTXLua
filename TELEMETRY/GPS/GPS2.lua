@@ -12,7 +12,8 @@
 -- Author: RCdiy
 -- Web: http://RCdiy.ca
 
--- Thanks:  Carbo (forum name) for requesting the ability to use 2 GPS sensors,
+-- Thanks:  Frans for Dutch files and catching bugs.
+--          Carbo (forum name) for requesting the ability to use 2 GPS sensors,
 --            testing, images, and for german translations of the announcements
 --          Painless360
 --            http://painless360.webs.com/
@@ -22,12 +23,10 @@
 --            http://www.movable-type.co.uk/scripts/latlong.html
 
 -- Date: 2016 July 1
--- Update: 2017 April 17
+-- Update: 2017 December 25
 
 -- Changes/Additions:
---  Supports up to 2 GPS sensors, attached to the Rx and Tx
---  Arrows are now drawn instead of using image files
---  New announcements
+--  Bug fixes. Dutch files.
 
 -- To do:
 --  Directions relative to a compass on the Tx
@@ -360,7 +359,7 @@ local function getSwitchStatus(switch)
     elseif  (switch.OnPosition == "notD") and not (position > 0) then
       return true
     else
-      return fasle
+      return false
     end
   else
     return false
