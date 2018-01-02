@@ -118,6 +118,8 @@ local SillyStuff = true  -- Play some silly/fun sounds
 -- Do not change the next line
 local GV = {[1] = 0, [2] = 1, [3] = 2,[4] = 3,[5] = 4,[6] = 5, [7] = 6, [8] = 7, [9] = 8}
 
+
+
 -- OpenTX Global Variables (GV)
 --	These are global to the model and not between models.
 --
@@ -132,6 +134,9 @@ local GV = {[1] = 0, [2] = 1, [3] = 2,[4] = 3,[5] = 4,[6] = 5, [7] = 6, [8] = 7,
 --
 -- Change as desired
 -- Use GV[6] for GV6, GV[7] for GV7 and so on
+
+local GVCapResPer = GV[6] -- Used to manually set the remaining battery capacity (percent) (sphrases)
+
 local GVBatCap = GV[7] 	-- Read Battery Capacity, 8 for 800mAh, 22 for 2200mAh
 												-- The corresponding must be set under the FLIGHT MODES
 												-- screen on the Tx.
@@ -269,6 +274,7 @@ end
 local function init_func()
 	-- Called once when model is loaded
 	BatCapFullmAh = model.getGlobalVariable(GVBatCap, GVFlightMode) * 100
+	CapacityReservePercent = model.getGlobalVariable(GVCapResPer, GVFlightMode) --reads the reserved capacity from gv (sphrases)
 	-- BatCapmAh = BatCapFullmAh
 	BatCapmAh = BatCapFullmAh * (100-CapacityReservePercent)/100
 	BatRemainmAh = BatCapmAh
