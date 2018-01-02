@@ -1,20 +1,3 @@
---here the variables that where global
---y	12
---minutes	0
---filePathName	/SCRIPTS/TELEMETRY/LapTmr/1.wav
---x	0
---now	357060
---switchValue	-1024
---rowHeight	12
---seconds	8.24
-
---stored the formatted string directly in the table, saving lots of memory during runtime.
-
---added support for different lcd screen sizes. Will run as a widget with a widget loader. See my blog at RC groups.
---L Shems
---feel free to clean up code
-
-
 -- License https://www.gnu.org/licenses/gpl-3.0.en.html
 -- OpenTX Lua script
 -- TELEMETRY
@@ -29,10 +12,12 @@
 -- Author: RCdiy
 -- Web: http://RCdiy.ca
 
--- Thanks:  none
+-- Thanks: L Shems
 
 -- Date: 2017 January 7
--- Update: none
+-- Update: 2018 January 1
+--		Changed globals to local, formatted string placed in table, support for different LCD sizes,
+--		will run as a widget with a widget loader (Horus transmitters).
 
 -- Description
 
