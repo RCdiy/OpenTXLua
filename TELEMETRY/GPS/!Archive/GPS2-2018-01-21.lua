@@ -23,15 +23,14 @@
 --            http://www.movable-type.co.uk/scripts/latlong.html
 
 -- Date: 2016 July 1
--- Update: 2018 January 21
+-- Update: 2017 December 25
 
 -- Changes/Additions:
---  Change added "local" where missing
+--  Bug fixes. Dutch files.
 
 -- To do:
 --  Directions relative to a compass on the Tx
 --  Write to custom sensors trips, distance
---  Display altitude
 
 -- Description
 --
@@ -346,7 +345,7 @@ local function getSwitchStatus(switch)
   -- Evaluates switch position settings
   -- Returns true or false
   if switch.Id ~= "" then
-     local position = getValue(switch.Id)
+    position = getValue(switch.Id)
     if (switch.OnPosition == "U") and (position < 0) then
       return true
     elseif  (switch.OnPosition == "M") and (position == 0) then
@@ -421,16 +420,16 @@ local function getMetersBetweenCoordinates(Lat1, Lon1, Lat2, Lon2)
   -- Latitude and Longitude in decimal degrees
   -- E.g. 40.1234, -75.4523342
   -- http://www.movable-type.co.uk/scripts/latlong.html
-  local R = 6371 * 10^3 -- radius of the earth in metres (meter)
-  local Phi1 = math.rad(Lat1)
-  local Phi2 = math.rad(Lat2)
-  local dPhi = math.rad(Lat2-Lat1)
-  local dLambda = math.rad(Lon2-Lon1)
-  local a = math.sin(dPhi/2)^2 + math.cos(Phi1) * math.cos(Phi2) * math.sin(dLambda/2)^2
-  local c = 2 * math.atan2(math.sqrt(a), math.sqrt(1-a))
+  R = 6371 * 10^3 -- radius of the earth in metres (meter)
+  Phi1 = math.rad(Lat1)
+  Phi2 = math.rad(Lat2)
+  dPhi = math.rad(Lat2-Lat1)
+  dLambda = math.rad(Lon2-Lon1)
+  a = math.sin(dPhi/2)^2 + math.cos(Phi1) * math.cos(Phi2) * math.sin(dLambda/2)^2
+  c = 2 * math.atan2(math.sqrt(a), math.sqrt(1-a))
 
-  -- distance = R * c
-  return R * c
+  distance = R * c
+  return distance
 end
 
 local function getDegreesBetweenCoordinates(LatFrom, LonFrom, LatTo, LonTo)
@@ -445,12 +444,12 @@ local function getDegreesBetweenCoordinates(LatFrom, LonFrom, LatTo, LonTo)
   --LatTo = 38.627089
   --LonTo = -90.200203
   -- correct answer is X  = 0.05967668696, Y = -0.00681261948, β = 96.51°
-  local X =  math.cos(math.rad(LatTo)) * math.sin(math.rad(LonTo-LonFrom))
+  X =  math.cos(math.rad(LatTo)) * math.sin(math.rad(LonTo-LonFrom))
 
-  local Y = (math.cos(math.rad(LatFrom)) * math.sin(math.rad(LatTo))) - (
+  Y = (math.cos(math.rad(LatFrom)) * math.sin(math.rad(LatTo))) - (
   math.sin(math.rad(LatFrom)) * math.cos(math.rad(LatTo)) * math.cos(math.rad(LonTo-LonFrom)))
 
-  local Bearing = math.deg(math.atan2(math.rad(X), math.rad(Y)))
+  Bearing = math.deg(math.atan2(math.rad(X), math.rad(Y)))
 
   if Bearing < 0 then
     return 360 + Bearing
@@ -603,28 +602,28 @@ local function updateGPSData()
       txGPSTable = getValue(PilotGPSSensorId)
     end
     if type(txGPSTable) == "table" then
-      -- Telemetry reset check
-      if (txLatAtReset ~= txGPSTable["pilot-lat"])
-      or (txLonAtReset ~= txGPSTable["pilot-lon"]) then
-        txLatAtReset = txGPSTable["pilot-lat"]
-        txLonAtReset = txGPSTable["pilot-lon"]
-        txLatPrevious = txLatAtReset
-        txLonPrevious = txLonAtReset
-        zeroAllDistancesDirections()
-      end
+        -- Telemetry reset check
+        if (txLatAtReset ~= txGPSTable["pilot-lat"])
+        or (txLonAtReset ~= txGPSTable["pilot-lon"]) then
+          txLatAtReset = txGPSTable["pilot-lat"]
+          txLonAtReset = txGPSTable["pilot-lon"]
+          txLatPrevious = txLatAtReset
+          txLonPrevious = txLonAtReset
+          zeroAllDistancesDirections()
+        end
       txLat = txGPSTable["lat"]
       txLon = txGPSTable["lon"]
     end
     if type(rxGPSTable) == "table" then
-      -- Telemetry reset check
-      if (rxLatAtReset ~= rxGPSTable["pilot-lat"])
-      or (rxLonAtReset ~= rxGPSTable["pilot-lon"]) then
-        rxLatAtReset = rxGPSTable["pilot-lat"]
-        rxLonAtReset = rxGPSTable["pilot-lon"]
-        rxLatPrevious = rxLatAtReset
-        rxLonPrevious = rxLonAtReset
-        zeroAllDistancesDirections()
-      end
+        -- Telemetry reset check
+        if (rxLatAtReset ~= rxGPSTable["pilot-lat"])
+        or (rxLonAtReset ~= rxGPSTable["pilot-lon"]) then
+          rxLatAtReset = rxGPSTable["pilot-lat"]
+          rxLonAtReset = rxGPSTable["pilot-lon"]
+          rxLatPrevious = rxLatAtReset
+          rxLonPrevious = rxLonAtReset
+          zeroAllDistancesDirections()
+        end
       rxLat = rxGPSTable["lat"]
       rxLon = rxGPSTable["lon"]
       -- *** hmm, needs to be un-nested
@@ -779,7 +778,7 @@ end
 local function playHeading16Degrees(degrees)
   -- Plays a heading sound file corresponding to the direction provided
   --  degrees is converted to 1 of 16 compass rose deadings
-  local headingFile = "H"..CompassRose16Table[math.floor((degrees/22.5) +0.5)]..".wav"
+  headingFile = "H"..CompassRose16Table[math.floor((degrees/22.5) +0.5)]..".wav"
   if headingFile ~= nil then
     headingFile = SoundFilesPath..headingFile
     playFile(headingFile)
@@ -791,7 +790,7 @@ local function playTurnLR16Degrees(degreeLR16)
   -- degreeLR16 must be one of
   -- 0, 23, 45, 68, 90, 113, 135, 158, 180
   -- -23, -45, -68, -90, -113, -135, -158
-  local turnFile = TurnsLR16FileName[degreeLR16]
+  turnFile = TurnsLR16FileName[degreeLR16]
   if turnFile ~= nil then
     turnFile = SoundFilesPath..turnFile
     -- playFile(name)
@@ -946,12 +945,11 @@ local function bg_func()
       writeOpenTXGVariablesIfTrue()
     end
 
-    AnnounceAircraftAltitude()
-    AnnounceAircraftReturnHomeTurns()
     AnnounceAircraftDistanceToPilot()
     AnnounceAircraftHeading()
+    AnnounceAircraftAltitude()
     AnnounceAircraftSpeed()
-
+    AnnounceAircraftReturnHomeTurns()
   end
 end
 
