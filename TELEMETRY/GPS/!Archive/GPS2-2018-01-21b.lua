@@ -421,9 +421,6 @@ local function getMetersBetweenCoordinates(Lat1, Lon1, Lat2, Lon2)
   -- Latitude and Longitude in decimal degrees
   -- E.g. 40.1234, -75.4523342
   -- http://www.movable-type.co.uk/scripts/latlong.html
-  if Lat1 == nil then -- No GPS lock
-    return 0
-  end
   local R = 6371 * 10^3 -- radius of the earth in metres (meter)
   local Phi1 = math.rad(Lat1)
   local Phi2 = math.rad(Lat2)
