@@ -19,7 +19,7 @@
 -- Thanks: TrueBuild (ideas)
 --
 -- Changes/Additions:
--- 	Choose between using consumption sensor or volatge sensor to calculate
+-- 	Choose between using consumption sensor or voltage sensor to calculate
 --		battery capacity remaining.
 --	Choose between simple and detailed display.
 --  Voice announcements of percentage remaining during active use.
@@ -90,7 +90,7 @@
 local Title = "Flight Battery Monitor"
 
 -- Sensors
--- 	Use Volatage and or mAh consumed calculated sensor based on VFAS, FrSky FAS-40
+-- 	Use Voltage and or mAh consumed calculated sensor based on VFAS, FrSky FAS-40
 -- 	Use sensor names from OpenTX TELEMETRY screen
 --  If you need help setting up a consumption sensor visit
 --		http://rcdiy.ca/calculated-sensor-consumption/
@@ -140,7 +140,7 @@ local GVBatCap = GV[7] 	-- Read Battery Capacity, 8 for 800mAh, 22 for 2200mAh
 												-- which may not be as accurate.
 local GVFlightMode = 0 -- Use a different flight mode if running out of GVs
 
-local WriteGVBatRemmAh = false -- set to true to turn off write
+local WriteGVBatRemmAh = false-- set to false to turn off write
 local WriteGVBatRemPer = false
 -- If writes are false then the corresponding GV below will not be used and these
 --	lines can be ignored.
@@ -204,6 +204,25 @@ local SoundsTable = {[5] = "Bat5L.wav",[10] = "Bat10L.wav",[20] = "Bat20L.wav"
 	,[30] = "Bat30L.wav",[40] = "Bat40L.wav",[50] = "Bat50L.wav"
 	,[60] = "Bat60L.wav",[70] = "Bat70L.wav",[80] = "Bat80L.wav"
 	,[90] = "Bat90L.wav"}
+
+-- ####################################################################
+local function getCellVoltage( voltageSensorIn ) 
+	-- For voltage sensors that return a table of sensors, add up the cell 
+	-- voltages to get a total cell voltage.
+	-- Otherwise, just return the value
+	cellResult = getValue( voltageSensorIn )
+	cellSum = 0
+
+	if (type(cellResult) == "table") then
+	    for i, v in ipairs(cellResult) do
+				cellSum = cellSum + v
+	    end
+	else 
+	    cellSum = cellResult
+  end
+
+	return cellSum
+end
 
 -- ####################################################################
 local function findPercentRem( cellVoltage )
@@ -320,15 +339,15 @@ local function bg_func()
 	end -- mAhSensor ~= ""
 
 	if VoltageSensor ~= "" then
-		VoltsNow = getValue(VoltageSensor)
-		VoltsMax = getValue(VoltageSensor.."+")
+		VoltsNow = getCellVoltage(VoltageSensor)
+		VoltsMax = getCellVoltage(VoltageSensor.."+")
 		CellCount = math.ceil(VoltsMax / 4.25)
 		if CellCount > 0 then
 			VoltsPercentRem  = findPercentRem( VoltsNow/CellCount )
 		end
 	end
 
-	-- Update battery remianing percent
+	-- Update battery remaining percent
 	if UseVoltsNotmAh then
 		BatRemPer = VoltsPercentRem - CapacityReservePercent
 	--elseif BatCapFullmAh > 0 then
@@ -400,11 +419,11 @@ local function run_func(event)	-- Called periodically when screen is visible
 		if VoltageSensor ~= "" then
 			lcd.drawText( x, y, VoltageSensor)
 			xAlign = lcd.getLastPos()+4
-			lcd.drawNumber(xAlign, y, getValue(VoltageSensor)*10, PREC1)
+			lcd.drawNumber(xAlign, y, getCellVoltage(VoltageSensor)*10, PREC1)
 			lcd.drawText( lcd.getLastPos(), y, "V")
 			y = y + fontSize
 			lcd.drawText( x, y, "Min")
-			lcd.drawNumber(xAlign, y, getValue(VoltageSensor.."-")*10, PREC1)
+			lcd.drawNumber(xAlign, y, getCellVoltage(VoltageSensor.."-")*10, PREC1)
 			lcd.drawText( lcd.getLastPos(), y, "V")
 			y = y + fontSize
 			lcd.drawText( x, y, "Cells")
