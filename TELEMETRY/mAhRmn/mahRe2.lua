@@ -13,6 +13,7 @@
 -- Web: http://RCdiy.ca
 -- Date: 2016 June 28
 -- Update: 2017 March 27
+-- Update: 2019 November 21 by daveEccleston (Handles sensors returning a table of cell voltages)
 --
 -- Reauthored: Dean Church
 -- Date: 2017 March 25
