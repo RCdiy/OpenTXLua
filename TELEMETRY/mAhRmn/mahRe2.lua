@@ -354,7 +354,7 @@ local function bg_func()
 	--elseif BatCapFullmAh > 0 then
   elseif BatCapmAh > 0 then
 		-- BatRemPer = math.floor( (BatRemainmAh / BatCapFullmAh) * 100 ) - CapacityReservePercent
-		BatRemPer = math.floor( (BatRemainmAh / BatCapmAh) * 100 ) - CapacityReservePercent
+		BatRemPer = math.floor( (BatRemainmAh / BatCapFullmAh) * 100 )
 	end
 	if AnnouncePercentRemaining then
 		PlayPercentRemaining()
