@@ -1,9 +1,9 @@
 # Download Instructions
 
 ## .Lua Files
-* Click on the file
-  * On the next page right click on Raw
-  * Save As/Download Linked File
+* Top right - Click on "Go to file"
+  * Click on the desired file
+  * Top right - Right click on "Raw" and select "Save As"
 * **After download ensure it has a .lua extension**
   * if it is .txt or .lua.txt change it to .lua
   * if is .html the download was done incorrectly
