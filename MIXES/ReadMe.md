@@ -2,7 +2,7 @@
 
 * Top right - Click on "Go to file"
   * Click on the desired file
-  * Top right - Right click on "RAW" and select "Save As"
+  * Top right - Right click on "Raw" and select "Save As"
 * **After download ensure it has a .lua extension**
   * if it is .txt or .lua.txt change it to .lua
   * if is .html the download was done incorrectly
