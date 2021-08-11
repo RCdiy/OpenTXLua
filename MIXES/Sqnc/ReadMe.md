@@ -1,11 +1,14 @@
 # Download
 
-* Click on a file
-  * Top right - Click on "Go to file"
-  * Right click on the file and select "Save as"
+* Top right - Click on "Go to file"
+  * Right click on the desired file and select "Save as"
 * **After download ensure it has a .lua extension**
   * if it is .txt or .lua.txt change it to .lua
   * if is .html the download was done incorrectly
+* Using a plain text editor (Windows Notepad)
+  * Open the file
+  * If the file has the word "html" the pile did not download correctly.
+   * Try again or get help on how to download the file and not the webpage showing the contents of the file   
 
 # Configuration
 * If you have not used a Telemetry script before please read this post
